@@ -376,7 +376,7 @@ void MainWindow::on_actionFind_triggered()
 // TODO:2按一个只能出来一个 按两个不一样的才能出现tab状（还是不要tab形式了吧
 // 注意咱只能编译miniC 其他的情况应弹窗提醒
 void MainWindow::on_actionCompile_triggered(){
-
+    on_actionSave_triggered();  // 编译前自动保存
     ui->dockWidget_assembly->setVisible(false);     // TODO:其实不应该这样 这样的话让两个显示的过程中不会出现tab 和view的矛盾
     ui->dockWidget_compile->setVisible(true);
     ui->textEdit_compile_output->setReadOnly(true);
@@ -401,7 +401,7 @@ void MainWindow::on_actionCompile_triggered(){
     output.remove();
 
     // 编译器路径
-    QString programName = path + "/exe/myCompile.exe";
+    QString programName = path + "/exe/MinicComplier.exe";
     QString filePath = file.fileName();
     QStringList arguments;
     arguments<<filePath;
@@ -416,13 +416,13 @@ void MainWindow::on_actionCompile_triggered(){
         // 将执行结果显示在下方complile文本框中
         QString outPath = path + "/cerror.txt";
         QFile file(outPath);
+
         if (file.open (QIODevice::ReadOnly | QIODevice::Text)){
             QByteArray all = file.readAll();
             QTextCodec *codec = QTextCodec::codecForName("GBK");
             QString ReadyText = codec->toUnicode(all);
             ui->textEdit_compile_output->append(ReadyText);
         }
-
         return;
     }
 
