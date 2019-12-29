@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     searchWidget = new QWidget(this);
     ui->mainToolBar->addWidget(searchWidget);
     QHBoxLayout* searchLayout = new QHBoxLayout(searchWidget);
-    QSpacerItem* spacer = new QSpacerItem(50,24,QSizePolicy::Expanding,QSizePolicy::Minimum);
+    QSpacerItem* spacer = new QSpacerItem(40,24,QSizePolicy::Expanding,QSizePolicy::Minimum);
     searchLayout->addItem(spacer);
     findBtn = new QPushButton(tr(""),searchWidget); // 查找按钮
     findBtn->setIcon(QIcon(":/img/img/find.png"));
@@ -68,15 +68,16 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     findBtn->setEnabled(false);
     csBtn->setEnabled(false);
     hwBtn->setEnabled(false);
-    // 词法选择 TODO:可以改成lexCbBox   TODO!!:再加个miniC的
+    // 词法选择 TODO:可以改成lexCbBox
     lex=new QComboBox(this);
-    lex->addItem(tr("Text  "));     // TODO:可以删掉几个看着不像抄的
-    lex->addItem(tr("C++  "));
-    lex->addItem(tr("ASM  "));      // TODO:ASM真的要吗 都没对应的高亮能调
-    lex->addItem(tr("Python  "));
-    lex->addItem(tr("Java "));
-    lex->addItem(tr("Verilog  "));
-    lex->setStyleSheet("QComboBox {combobox-popup: 1;font-family: Arial;margin-right:30px}");   // TODO:太丑了 给我搞出来！！
+    lex->setMinimumHeight(25);
+    lex->addItem(tr(" Text    "));
+    lex->addItem(tr(" C++    "));
+    lex->addItem(tr(" MiniC    "));
+    lex->addItem(tr(" ASM    "));
+    lex->setStyleSheet("QComboBox {combobox-popup: 1;font-family: Arial;margin-right:30px;border-radius:3px}"
+                       "QComboBox::drop-down {border-top-right-radius: 3px;border-bottom-right-radius: 3px;}"
+                       "QComboBox::down-arrow {image: url(:/img/img/pull_down.png);padding-right: 10px}");
     // 组件放进布局
     searchLayout->addWidget(lex);
     searchLayout->addWidget(hwBtn);
@@ -88,7 +89,6 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     connect(csBtn,SIGNAL(clicked(bool)),this,SLOT(set_find_cs()));
     connect(hwBtn,SIGNAL(clicked(bool)),this,SLOT(set_find_hw()));
     connect(findEdit, SIGNAL(returnPressed()), findBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //光标在查找框时查找按钮和回车等效
-//    ui->statusBar->addPermanentWidget(lex);
     connect(lex, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
 
     // 编译和汇编结果显示在tab形式的窗体
@@ -126,7 +126,7 @@ void MainWindow::actionActive(bool act){
     ui->actionCompile->setEnabled(act);
     ui->actionAssemblyNew->setEnabled(act);     // TODO:new和append都是啥？？
     ui->actionAssemblyAppend->setEnabled(act);
-    ui->actionCompileOutPut->setEnabled(act);   // TODO:这又是啥？？
+    ui->actionCompileOutPut->setEnabled(act);
     ui->actionAssemblyOutPut->setEnabled(act);
 }
 
@@ -143,7 +143,7 @@ void MainWindow::on_actionNew_triggered(){        // TODO:名字改了之后就�
     statusLabel->setText(tr("Untitled.*"));
 
     isNew=true;
-    isOpen=false;    // FIXME:true的话含义上是不是有问题
+    isOpen=false;
 }
 
 void MainWindow::on_actionOpen_triggered(){
@@ -155,17 +155,14 @@ void MainWindow::on_actionOpen_triggered(){
         return;
     // 打开了文件
     else{
-        // 设置文件类型对应的语法高亮    TODO:类型减少的话这里也要改一下 还有012345在editorWidget.cpp里改
+        // 设置文件类型对应的语法高亮
         if(fileName.endsWith(".txt")) {editor->setLexer(0);lex->setCurrentIndex(0);}
         else if(fileName.endsWith(".cpp")||fileName.endsWith(".h")) {editor->setLexer(1);lex->setCurrentIndex(1);}
-        else if(fileName.endsWith(".asm")) {editor->setLexer(2);lex->setCurrentIndex(2);}
-        else if(fileName.endsWith(".py")) {editor->setLexer(3);lex->setCurrentIndex(3);}
-        else if(fileName.endsWith(".java")) {editor->setLexer(4);lex->setCurrentIndex(4);}
-        else if(fileName.endsWith(".v")) {editor->setLexer(5);lex->setCurrentIndex(5);}
+        else if(fileName.endsWith(".asm")) {editor->setLexer(3);lex->setCurrentIndex(3);}
 
-        QFile file(fileName);       // TODO:如果我要设置默认路径为上次打开的路径？至少是本次程序运行中上次打开的路径
+        QFile file(fileName);
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-            QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));    // look:用这个弹窗可以
+            QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));
             return;
         }
         else{
@@ -197,7 +194,7 @@ void MainWindow::on_actionOpen_triggered(){
 }
 
 void MainWindow::on_actionSave_triggered(){
-//    actionActive(true);//需要保存文件时激活相关按钮 TODO:鸡肋叭
+
     // 若为本次新建的文件
     if(isNew){
         // 文件为空不可保存
@@ -206,7 +203,7 @@ void MainWindow::on_actionSave_triggered(){
         else{
             QFileDialog fileDialog;
             QString str = fileDialog.getSaveFileName(this,tr("Save"),"/Untitled",
-            tr("Text File(*.txt);;Cpp(*.cpp);;Cpp(*.h);;ASM(*.asm);;Python(*.py);;Java(*.java);;Verilog(*.v);;All (*.*)"),
+            tr("Text File(*.txt);;Cpp(*.cpp);;Cpp(*.h);;MiniC(*.cpp);;ASM(*.asm);;All (*.*)"),
             &selectedlanguage);
 
             if(str == "") return;
@@ -254,15 +251,14 @@ void MainWindow::on_actionSave_triggered(){
             }
         }
         else{
-            QMessageBox::warning(this,tr("Warning"),tr("Please new or open a file!"));  // TODO:应该没有这种情况吧。。
+            QMessageBox::warning(this,tr("Warning"),tr("Please new or open a file!"));
             return;
         }
     }
 }
 
-void MainWindow::on_actionSave_As_triggered()
-{
-//    actionActive(true);//需要保存文件时激活相关按钮   TODO:鸡肋叭
+void MainWindow::on_actionSave_As_triggered(){
+
     // 文件为空不可另存为
     if(editor->geteditor()->text() == ""){
         QMessageBox::warning(this,tr("Warning"),tr("Empty file!"),QMessageBox::Ok);
@@ -271,7 +267,7 @@ void MainWindow::on_actionSave_As_triggered()
 
     QFileDialog fileDialog;
     QString fileName = fileDialog.getSaveFileName(this,tr("Save as"),"/Untitled",
-                       tr("Text File(*.txt);;Cpp(*.cpp);;Cpp(*.h);;ASM(*.asm);;Python(*.py);;Java(*.java);;Verilog(*.v);;All (*.*)"),
+                       tr("Text File(*.txt);;Cpp(*.cpp);;Cpp(*.h);;MiniC(*.cpp);;ASM(*.asm);;All (*.*)"),
                        &selectedlanguage);
     if(fileName == "")
         return;
@@ -310,7 +306,7 @@ void MainWindow::closeEvent(QCloseEvent *event){
     }
     // 否则弹出警告
     else{
-        if(QMessageBox::warning(this,tr("Warning"),tr("Not Saved,Exit?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+        if(QMessageBox::warning(this,tr("Warning"),tr("Exit without being saved?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
             event->accept();
         else
             event->ignore();
@@ -318,49 +314,40 @@ void MainWindow::closeEvent(QCloseEvent *event){
 }
 
 
-void MainWindow::on_actionCompileOutPut_triggered()
-{
+void MainWindow::on_actionCompileOutPut_triggered(){
     ui->dockWidget_compile->setVisible(true);
 }
 
-void MainWindow::on_actionAssemblyOutPut_triggered()
-{
+void MainWindow::on_actionAssemblyOutPut_triggered(){
     ui->dockWidget_assembly->setVisible(true);
 }
 
-void MainWindow::on_actionCut_triggered()
-{
+void MainWindow::on_actionCut_triggered(){
     editor->geteditor()->cut();
 }
 
-void MainWindow::on_actionCopy_triggered()
-{
+void MainWindow::on_actionCopy_triggered(){
     editor->geteditor()->copy();
 }
 
-void MainWindow::on_actionPaste_triggered()
-{
+void MainWindow::on_actionPaste_triggered(){
     editor->geteditor()->paste();
 }
 
-void MainWindow::on_actionSelect_All_triggered()
-{
+void MainWindow::on_actionSelect_All_triggered(){
     editor->geteditor()->selectAll();
 }
 
-void MainWindow::on_actionUndo_triggered()
-{
+void MainWindow::on_actionUndo_triggered(){
     editor->geteditor()->undo();
 }
 
-void MainWindow::on_actionRedo_triggered()
-{
+void MainWindow::on_actionRedo_triggered(){
     editor->geteditor()->redo();
 }
 
 // 仅当 菜单选择搜索 or ctrl+F之后
-void MainWindow::on_actionFind_triggered()
-{
+void MainWindow::on_actionFind_triggered(){
     findEdit->setEnabled(true);
     findBtn->setEnabled(true);
     csBtn->setEnabled(true);
@@ -374,8 +361,17 @@ void MainWindow::on_actionFind_triggered()
 
 // TODO:1按view中的只能出来不能回去（问题不大）
 // TODO:2按一个只能出来一个 按两个不一样的才能出现tab状（还是不要tab形式了吧
-// 注意咱只能编译miniC 其他的情况应弹窗提醒
 void MainWindow::on_actionCompile_triggered(){
+
+    // 对于非miniC程序进行提醒无法编译
+    if(lex->currentIndex()!=2){
+        if(lex->currentIndex()==1)  // 如果是C++
+            QMessageBox::warning(this,tr("Warning"),tr("Only MiniC compiler offered!\nYou can change to MiniC in the toolBar if you like."));
+        else
+            QMessageBox::warning(this,tr("Warning"),tr("Only MiniC compiler offered!"));
+        return;
+    }
+
     on_actionSave_triggered();  // 编译前自动保存
     ui->dockWidget_assembly->setVisible(false);     // TODO:其实不应该这样 这样的话让两个显示的过程中不会出现tab 和view的矛盾
     ui->dockWidget_compile->setVisible(true);
@@ -387,7 +383,7 @@ void MainWindow::on_actionCompile_triggered(){
     QFile file(filename);
 
     if (!file.open (QIODevice::ReadOnly)){
-        QMessageBox::warning(this,tr("Warning"),tr("Open Failed!"));
+        QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));
         return;
     }
 
@@ -396,7 +392,7 @@ void MainWindow::on_actionCompile_triggered(){
     QDir dir;
     path = dir.currentPath();
 
-    // 编译前清空输出文件   TODO:这样可以清空界面中的下面那块么？
+    // 编译前清空输出文件
     QFile output(path + "/cerror.txt");
     output.remove();
 
@@ -426,7 +422,7 @@ void MainWindow::on_actionCompile_triggered(){
         return;
     }
 
-    ui->textEdit_compile_output->append("Process failed to start,please check!");
+    ui->textEdit_compile_output->append("Process failed to start, please check!");
     return;
 }
 
@@ -438,8 +434,9 @@ void MainWindow::on_actionAssemblyAppend_triggered(){
     assembly("append");
 }
 
-void MainWindow::assembly(QString type)
-{
+void MainWindow::assembly(QString type){
+
+    on_actionSave_triggered();
     ui->dockWidget_compile->setVisible(false);
     ui->dockWidget_assembly->setVisible(true);
     ui->textEdit_assembly_output->setReadOnly(true);
@@ -459,7 +456,7 @@ void MainWindow::assembly(QString type)
     QDir dir;
     path = dir.currentPath();
 
-    // 清空         TODO:这样可以清空界面中的下面那块么？
+    // 清空
     QFile output(path + "/error.txt");
     output.remove();
 
@@ -486,13 +483,12 @@ void MainWindow::assembly(QString type)
         return;
     }
 
-    ui->textEdit_assembly_output->append("Process failed to start,please check!");
+    ui->textEdit_assembly_output->append("Process failed to start, please check!");
     return;
 }
 
 // 设置和取消大小写敏感
-void MainWindow::set_find_cs()
-{
+void MainWindow::set_find_cs(){
     if(isCs == false){
         isCs = true;
         csBtn->setStyleSheet("QPushButton{""background-color:rgb(204,204,204);""border-radius:1px}");
@@ -504,8 +500,7 @@ void MainWindow::set_find_cs()
 }
 
 // 设置和取消全词匹配
-void MainWindow::set_find_hw()
-{
+void MainWindow::set_find_hw(){
     if(isHw == false){
         isHw = true;
         hwBtn->setStyleSheet("QPushButton{""background-color:rgb(204,204,204);""border-radius:1px}");
@@ -526,7 +521,7 @@ void MainWindow::show_find_str(){
         editor->geteditor()->setPalette(palette);
     }
     else
-        QMessageBox::information(this,tr("Warning"),tr("Find None!"),QMessageBox::Ok);
+        QMessageBox::information(this,tr("Warning"),tr("Find none!"),QMessageBox::Ok);
 }
 
 // 由选择语法高亮触发

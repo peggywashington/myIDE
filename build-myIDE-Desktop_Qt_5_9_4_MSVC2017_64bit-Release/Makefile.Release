@@ -189,6 +189,7 @@ release\qrc_img.cpp: ..\myIDE\img.qrc \
 		..\myIDE\img\cut.png \
 		..\myIDE\img\undo.png \
 		..\myIDE\img\hw.png \
+		..\myIDE\img\pull_down.png \
 		..\myIDE\img\select_all.png \
 		..\myIDE\img\redo.png \
 		..\myIDE\img\replace.png \

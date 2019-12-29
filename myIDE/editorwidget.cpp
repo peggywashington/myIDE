@@ -67,20 +67,12 @@ QString editorWidget::setLexer(const int type)
         selectedLanguage = "Cpp(*.cpp)";
         break;
     case 2:
-        lexer = new QsciLexerCPP;//2-asm
-        selectedLanguage = "ASM(*.asm)";
+        lexer=new QsciLexerCPP;//1-c++
+        selectedLanguage = "MiniC(*.cpp)";
         break;
     case 3:
-        lexer = new QsciLexerPython;//3-python
-        selectedLanguage = "Python(*.py)";
-        break;
-    case 4:
-        lexer = new QsciLexerJava;//4-java
-        selectedLanguage = "Java(*.java)";
-        break;
-    case 5:
-        lexer = new QsciLexerVerilog;//5-verilog
-        selectedLanguage = "Verilog(*.v)";
+        lexer = new QsciLexerCPP;//2-asm
+        selectedLanguage = "ASM(*.asm)";
         break;
     default:
         lexer = nullptr;//defaul-plain text
