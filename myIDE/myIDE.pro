@@ -23,17 +23,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     editorwidget.cpp \
-    findtextdialog.cpp
+    aboutdialog.cpp
 
 HEADERS += \
         mainwindow.h \
     typedef.h \
     editorwidget.h \
-    findtextdialog.h
+    aboutdialog.h
 
 FORMS += \
         mainwindow.ui \
-    findtextdialog.ui
+    aboutdialog.ui
 
 
 INCLUDEPATH += C:/Users/lenovo/Desktop/ide/QScintilla-2.11.4/QScintilla-2.11.4/Qt4Qt5

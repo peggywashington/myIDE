@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include<editorwidget.h>
-#include<findtextdialog.h>
+#include<aboutdialog.h>
 
 #include<QMainWindow>
 #include<QLineEdit>
@@ -80,7 +80,7 @@ private:
         QPushButton *csBtn;     // 大小写敏感按钮
         QPushButton *hwBtn;     // 全词匹配按钮
     QLabel *statusLabel;        // 底部状态栏显示当前打开的文件名
-    FindTextDialog *about;      // about对话框
+    AboutDialog *about;      // about对话框
 
     // 相关标记
     bool isOpen=false;      // 当前文件是否为通过打开得到的

@@ -18,7 +18,7 @@
 #include<windows.h>
 #include<QPushButton>
 #include<QIcon>
-#include<findtextdialog.h>
+#include<aboutdialog.h>
 #include<qDebug>
 #include<iostream>
 using namespace std;
@@ -487,7 +487,7 @@ void MainWindow::assembly(QString type){
 }
 
 void MainWindow::on_actionAbout_seu_IDE_triggered(){
-    about=new FindTextDialog(this);
+    about=new AboutDialog(this);
     about->setModal(true);
     about->show();
 }
