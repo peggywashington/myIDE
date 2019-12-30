@@ -211,8 +211,9 @@ debug\moc_predefs.h: D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\mkspecs\features\data
 compiler_moc_header_make_all: debug\moc_mainwindow.cpp debug\moc_editorwidget.cpp debug\moc_findtextdialog.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) debug\moc_mainwindow.cpp debug\moc_editorwidget.cpp debug\moc_findtextdialog.cpp
-debug\moc_mainwindow.cpp: D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QMainWindow \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qmainwindow.h \
+debug\moc_mainwindow.cpp: ..\myIDE\editorwidget.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtwidgetsglobal.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtguiglobal.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qglobal.h \
@@ -238,7 +239,6 @@ debug\moc_mainwindow.cpp: D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidget
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qversiontagging.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtgui-config.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtwidgets-config.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qwindowdefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qobjectdefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qnamespace.h \
@@ -312,19 +312,6 @@ debug\moc_mainwindow.cpp: D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidget
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qfiledevice.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qvector2d.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtouchdevice.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabwidget.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qicon.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLineEdit \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlineedit.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qframe.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextcursor.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextformat.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qpen.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextoption.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QDialog \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qdialog.h \
-		..\myIDE\editorwidget.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qsciscintilla.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QByteArray \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\QList \
@@ -337,11 +324,25 @@ debug\moc_mainwindow.cpp: D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidget
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qsciscintillabase.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QAbstractScrollArea \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qabstractscrollarea.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qframe.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QPoint \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QTimer \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qtimer.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qbasictimer.h \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qscidocument.h \
+		..\myIDE\findtextdialog.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QDialog \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qdialog.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QMainWindow \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qmainwindow.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabwidget.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qicon.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLineEdit \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlineedit.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextcursor.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextformat.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qpen.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextoption.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLabel \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlabel.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QPushButton \
@@ -360,7 +361,6 @@ debug\moc_mainwindow.cpp: D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidget
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabbar.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qrubberband.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qabstractitemmodel.h \
-		..\myIDE\findtextdialog.h \
 		..\myIDE\mainwindow.h \
 		debug\moc_predefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\bin\moc.exe
@@ -621,8 +621,9 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 debug\main.obj: ..\myIDE\main.cpp ../myIDE/mainwindow.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QMainWindow \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qmainwindow.h \
+		../myIDE/editorwidget.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtwidgetsglobal.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtguiglobal.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qglobal.h \
@@ -648,7 +649,6 @@ debug\main.obj: ..\myIDE\main.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qversiontagging.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtgui-config.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtwidgets-config.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qwindowdefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qobjectdefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qnamespace.h \
@@ -722,19 +722,6 @@ debug\main.obj: ..\myIDE\main.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qfiledevice.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qvector2d.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtouchdevice.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabwidget.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qicon.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLineEdit \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlineedit.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qframe.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextcursor.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextformat.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qpen.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextoption.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QDialog \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qdialog.h \
-		../myIDE/editorwidget.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qsciscintilla.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QByteArray \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\QList \
@@ -747,11 +734,25 @@ debug\main.obj: ..\myIDE\main.cpp ../myIDE/mainwindow.h \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qsciscintillabase.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QAbstractScrollArea \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qabstractscrollarea.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qframe.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QPoint \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QTimer \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qtimer.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qbasictimer.h \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qscidocument.h \
+		../myIDE/findtextdialog.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QDialog \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qdialog.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QMainWindow \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qmainwindow.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabwidget.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qicon.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLineEdit \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlineedit.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextcursor.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextformat.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qpen.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextoption.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLabel \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlabel.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QPushButton \
@@ -770,7 +771,6 @@ debug\main.obj: ..\myIDE\main.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabbar.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qrubberband.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qabstractitemmodel.h \
-		../myIDE/findtextdialog.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QApplication \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qapplication.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qcoreapplication.h \
@@ -783,8 +783,9 @@ debug\main.obj: ..\myIDE\main.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QDebug
 
 debug\mainwindow.obj: ..\myIDE\mainwindow.cpp ../myIDE/mainwindow.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QMainWindow \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qmainwindow.h \
+		../myIDE/editorwidget.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtwidgetsglobal.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtguiglobal.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qglobal.h \
@@ -810,7 +811,6 @@ debug\mainwindow.obj: ..\myIDE\mainwindow.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qversiontagging.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtgui-config.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtwidgets-config.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qwindowdefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qobjectdefs.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qnamespace.h \
@@ -884,19 +884,6 @@ debug\mainwindow.obj: ..\myIDE\mainwindow.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qfiledevice.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qvector2d.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtouchdevice.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabwidget.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qicon.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLineEdit \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlineedit.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qframe.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextcursor.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextformat.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qpen.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextoption.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QDialog \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qdialog.h \
-		../myIDE/editorwidget.h \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qsciscintilla.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QByteArray \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\QList \
@@ -909,11 +896,25 @@ debug\mainwindow.obj: ..\myIDE\mainwindow.cpp ../myIDE/mainwindow.h \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qsciscintillabase.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QAbstractScrollArea \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qabstractscrollarea.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qframe.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QPoint \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QTimer \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qtimer.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qbasictimer.h \
 		..\..\QScintilla-2.11.4\QScintilla-2.11.4\Qt4Qt5\Qsci\qscidocument.h \
+		../myIDE/findtextdialog.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QDialog \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qdialog.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QMainWindow \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qmainwindow.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabwidget.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qicon.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLineEdit \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlineedit.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextcursor.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextformat.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qpen.h \
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\qtextoption.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QLabel \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qlabel.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QPushButton \
@@ -932,7 +933,6 @@ debug\mainwindow.obj: ..\myIDE\mainwindow.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qtabbar.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\qrubberband.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qabstractitemmodel.h \
-		../myIDE/findtextdialog.h \
 		ui_mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QVariant \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QAction \

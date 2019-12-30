@@ -226,6 +226,7 @@ public:
         font2.setFamily(QStringLiteral("Consolas"));
         font2.setPointSize(10);
         dockWidget_assembly->setFont(font2);
+        dockWidget_assembly->setFloating(false);
         dockWidget_assembly->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
         dockWidgetContents_assembly = new QWidget();
         dockWidgetContents_assembly->setObjectName(QStringLiteral("dockWidgetContents_assembly"));
@@ -292,6 +293,8 @@ public:
         mainToolBar->addSeparator();
 
         retranslateUi(MainWindow);
+        QObject::connect(dockWidget_compile, SIGNAL(visibilityChanged(bool)), actionCompileOutPut, SLOT(setChecked(bool)));
+        QObject::connect(dockWidget_assembly, SIGNAL(visibilityChanged(bool)), actionAssemblyOutPut, SLOT(setChecked(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi

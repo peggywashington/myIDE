@@ -25,13 +25,15 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void assembly(QString type);    // 汇编,参数为类型(New or Append)   TODO:为啥public
-
-private slots:
-
     // event
-    bool new_or_open_without_saving_event(QString mode);
+    bool newOrOpenWithoutSavingEvent(QString mode);
     void closeEvent(QCloseEvent *event);                    // 窗口关闭事件
+
+    void actionActive(bool act);                // 按钮激活函数
+
+    void assembly(QString type);    // 汇编,参数为类型(New or Append)
+
+private slots:  // 槽函数
 
     // menu-file
     void on_actionNew_triggered();      // 新建文件
@@ -61,8 +63,6 @@ private slots:
     // menu-help
     void on_actionAbout_seu_IDE_triggered();
 
-    void actionActive(bool act);                // 按钮激活函数
-
     // toolbar
     void select_lex();      // 词法选择
     void set_find_cs();     // 设置查找大小写敏感
@@ -73,7 +73,7 @@ private:
     Ui::MainWindow *ui;
     // 组件
     editorWidget *editor;       // 代码编辑框
-    QComboBox *lex;             // 词法选择框
+    QComboBox *lexCbBox;        // 词法选择框
     QWidget *searchWidget;      // 查找组件
         QLineEdit *findEdit;    // 查找输入框
         QPushButton *findBtn;   // 查找按钮

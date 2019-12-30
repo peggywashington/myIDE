@@ -184,6 +184,9 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -418,5 +421,38 @@
  <resources>
   <include location="img.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>dockWidget_compile</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionCompileOutPut</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>323</x>
+     <y>702</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>702</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dockWidget_assembly</sender>
+   <signal>visibilityChanged(bool)</signal>
+   <receiver>actionAssemblyOutPut</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>976</x>
+     <y>702</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

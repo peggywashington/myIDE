@@ -23,7 +23,8 @@
       </font>
      </property>
      <property name="text">
-      <string>HYD</string>
+      <string>欢迎使用SEU_IDE！
+支持MiniC编译及汇编。</string>
      </property>
     </widget>
    </item>

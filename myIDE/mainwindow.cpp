@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include<iostream>
 #include<QTextEdit>
 #include<QMdiSubWindow>
@@ -68,18 +69,18 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     findBtn->setEnabled(false);
     csBtn->setEnabled(false);
     hwBtn->setEnabled(false);
-    // 词法选择 TODO:可以改成lexCbBox
-    lex=new QComboBox(this);
-    lex->setMinimumHeight(25);
-    lex->addItem(tr(" Text    "));
-    lex->addItem(tr(" C++    "));
-    lex->addItem(tr(" MiniC    "));
-    lex->addItem(tr(" ASM    "));
-    lex->setStyleSheet("QComboBox {combobox-popup: 1;font-family: Arial;margin-right:30px;border-radius:3px}"
+    // 词法选择框
+    lexCbBox=new QComboBox(this);
+    lexCbBox->setMinimumHeight(25);
+    lexCbBox->addItem(tr(" Text    "));
+    lexCbBox->addItem(tr(" C++    "));
+    lexCbBox->addItem(tr(" MiniC    "));
+    lexCbBox->addItem(tr(" ASM    "));
+    lexCbBox->setStyleSheet("QComboBox {combobox-popup: 1;font-family: Arial;margin-right:30px;border-radius:3px}"
                        "QComboBox::drop-down {border-top-right-radius: 3px;border-bottom-right-radius: 3px;}"
                        "QComboBox::down-arrow {image: url(:/img/img/pull_down.png);padding-right: 10px}");
     // 组件放进布局
-    searchLayout->addWidget(lex);
+    searchLayout->addWidget(lexCbBox);
     searchLayout->addWidget(hwBtn);
     searchLayout->addWidget(csBtn);
     searchLayout->addWidget(findEdit);
@@ -89,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     connect(csBtn,SIGNAL(clicked(bool)),this,SLOT(set_find_cs()));
     connect(hwBtn,SIGNAL(clicked(bool)),this,SLOT(set_find_hw()));
     connect(findEdit, SIGNAL(returnPressed()), findBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //光标在查找框时查找按钮和回车等效
-    connect(lex, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
+    connect(lexCbBox, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
 
     // 编译和汇编结果显示在tab形式的窗体
     this->splitDockWidget(ui->dockWidget_compile,ui->dockWidget_assembly,Qt::Horizontal);     //TODO:应该改成compileDockWidget
@@ -105,7 +106,8 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-bool MainWindow::new_or_open_without_saving_event(QString mode){
+// call message box when new or open without saving
+bool MainWindow::newOrOpenWithoutSavingEvent(QString mode){
     QMessageBox msgBox;
     QPushButton *okbtn=new QPushButton(mode+" anyway");
     QPushButton *cancelbtn=new QPushButton(QObject::tr("Cancel"));
@@ -135,7 +137,7 @@ void MainWindow::closeEvent(QCloseEvent *event){
 void MainWindow::on_actionNew_triggered(){        // TODO:名字改了之后就不对了。。。
 
     if(editor->geteditor()->isModified())
-        if(!new_or_open_without_saving_event("New")) return;
+        if(!newOrOpenWithoutSavingEvent("New")) return;
 
     editor->geteditor()->clear();
     editor->geteditor()->setVisible(true);
@@ -152,7 +154,7 @@ void MainWindow::on_actionNew_triggered(){        // TODO:名字改了之后就�
 void MainWindow::on_actionOpen_triggered(){
 
     if(editor->geteditor()->isModified())
-        if(!new_or_open_without_saving_event("Open")) return;
+        if(!newOrOpenWithoutSavingEvent("Open")) return;
 
     QString fileName;
     fileName = QFileDialog::getOpenFileName(this,tr("Open file"));
@@ -163,9 +165,9 @@ void MainWindow::on_actionOpen_triggered(){
     // 打开了文件
     else{
         // 设置文件类型对应的语法高亮
-        if(fileName.endsWith(".txt")) {editor->setLexer(0);lex->setCurrentIndex(0);}
-        else if(fileName.endsWith(".cpp")||fileName.endsWith(".h")) {editor->setLexer(1);lex->setCurrentIndex(1);}
-        else if(fileName.endsWith(".asm")) {editor->setLexer(3);lex->setCurrentIndex(3);}
+        if(fileName.endsWith(".txt")) {editor->setLexer(0);lexCbBox->setCurrentIndex(0);}
+        else if(fileName.endsWith(".cpp")||fileName.endsWith(".h")) {editor->setLexer(1);lexCbBox->setCurrentIndex(1);}
+        else if(fileName.endsWith(".asm")) {editor->setLexer(3);lexCbBox->setCurrentIndex(3);}
 
         QFile file(fileName);
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
@@ -343,9 +345,14 @@ void MainWindow::on_actionFind_triggered(){
 }
 
 void MainWindow::on_actionCompileOutPut_triggered(){
-    if(ui->dockWidget_compile->isVisible())
+    if(ui->dockWidget_compile->isVisible()){
         ui->dockWidget_compile->setVisible(false);
-    else ui->dockWidget_compile->setVisible(true);
+        ui->actionCompile->setChecked(false);
+    }
+    else{
+        ui->dockWidget_compile->setVisible(true);
+        ui->actionCompile->setChecked(true);
+    }
 }
 
 void MainWindow::on_actionAssemblyOutPut_triggered(){
@@ -354,12 +361,11 @@ void MainWindow::on_actionAssemblyOutPut_triggered(){
     else ui->dockWidget_assembly->setVisible(true);
 }
 
-// TODO:1按view中的只能出来不能回去（问题不大）
 void MainWindow::on_actionCompile_triggered(){
 
     // 对于非miniC程序进行提醒无法编译
-    if(lex->currentIndex()!=2){
-        if(lex->currentIndex()==1)  // 如果是C++
+    if(lexCbBox->currentIndex()!=2){
+        if(lexCbBox->currentIndex()==1)  // 如果是C++
             QMessageBox::warning(this,tr("Warning"),tr("Only MiniC compiler offered!\nYou can change to MiniC in the toolBar if you like."));
         else
             QMessageBox::warning(this,tr("Warning"),tr("Only MiniC compiler offered!"));
@@ -491,7 +497,6 @@ void MainWindow::actionActive(bool act){
 
     ui->actionSave->setEnabled(act);
     ui->actionSave_As->setEnabled(act);
-
     ui->actionUndo->setEnabled(act);
     ui->actionRedo->setEnabled(act);
     ui->actionCopy->setEnabled(act);
@@ -502,7 +507,8 @@ void MainWindow::actionActive(bool act){
     ui->actionReplace->setEnabled(act);
 
     ui->actionCompile->setEnabled(act);
-    ui->actionAssemblyNew->setEnabled(act);     // TODO:new和append都是啥？？
+    ui->menuAssembly->setEnabled(act);
+    ui->actionAssemblyNew->setEnabled(act);
     ui->actionAssemblyAppend->setEnabled(act);
     ui->actionCompileOutPut->setEnabled(act);
     ui->actionAssemblyOutPut->setEnabled(act);
@@ -547,6 +553,6 @@ void MainWindow::show_find_str(){
 
 // 由选择语法高亮触发
 void MainWindow::select_lex(){
-    int type=lex->currentIndex();
+    int type=lexCbBox->currentIndex();
     selectedlanguage = editor->setLexer(type);  // 接收当前类型
 }

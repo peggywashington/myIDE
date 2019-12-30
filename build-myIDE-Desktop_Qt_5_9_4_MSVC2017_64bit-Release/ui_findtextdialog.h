@@ -51,7 +51,8 @@ public:
     void retranslateUi(QDialog *FindTextDialog)
     {
         FindTextDialog->setWindowTitle(QApplication::translate("FindTextDialog", "About", Q_NULLPTR));
-        label->setText(QApplication::translate("FindTextDialog", "HYD", Q_NULLPTR));
+        label->setText(QApplication::translate("FindTextDialog", "\346\254\242\350\277\216\344\275\277\347\224\250SEU_IDE\357\274\201\n"
+"\346\224\257\346\214\201MiniC\347\274\226\350\257\221\345\217\212\346\261\207\347\274\226\343\200\202", Q_NULLPTR));
     } // retranslateUi
 
 };
