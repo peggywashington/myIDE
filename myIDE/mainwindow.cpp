@@ -18,7 +18,7 @@
 #include<QPushButton>
 #include<QIcon>
 #include<findtextdialog.h>
-#include<QDebug>
+#include<qDebug>
 #include<iostream>
 using namespace std;
 
@@ -108,32 +108,37 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-// 设置按钮可用与否
-void MainWindow::actionActive(bool act){
+bool MainWindow::new_or_open_without_saving_event(QString mode){
+    QMessageBox msgBox;
+    QPushButton *okbtn=new QPushButton(mode+" anyway");
+    QPushButton *cancelbtn=new QPushButton(QObject::tr("Cancel"));
+    msgBox.setWindowTitle("Warning");
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setText(mode+" another without saving the current file?");
+    msgBox.addButton(okbtn,QMessageBox::AcceptRole);
+    msgBox.addButton(cancelbtn,QMessageBox::RejectRole);
+    msgBox.exec();
+    if (msgBox.clickedButton() == okbtn) return true;
+    else return false;
+}
 
-    ui->actionSave->setEnabled(act);
-    ui->actionSave_As->setEnabled(act);
-
-    ui->actionUndo->setEnabled(act);
-    ui->actionRedo->setEnabled(act);
-    ui->actionCopy->setEnabled(act);
-    ui->actionCut->setEnabled(act);
-    ui->actionPaste->setEnabled(act);
-    ui->actionSelect_All->setEnabled(act);
-    ui->actionFind->setEnabled(act);
-    ui->actionReplace->setEnabled(act);
-
-    ui->actionCompile->setEnabled(act);
-    ui->actionAssemblyNew->setEnabled(act);     // TODO:new和append都是啥？？
-    ui->actionAssemblyAppend->setEnabled(act);
-    ui->actionCompileOutPut->setEnabled(act);
-    ui->actionAssemblyOutPut->setEnabled(act);
+// 关闭窗口事件，重写closeEvent
+void MainWindow::closeEvent(QCloseEvent *event){
+    // 若未修改则，则接收关闭指示
+    if(!editor->geteditor()->isModified()) event->accept();
+    // 否则弹出警告
+    else{
+        if(QMessageBox::warning(this,tr("Warning"),tr("Exit without being saved?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+            event->accept();
+        else
+            event->ignore();
+    }
 }
 
 void MainWindow::on_actionNew_triggered(){        // TODO:名字改了之后就不对了。。。
 
-    // TODO:没有判断上一个文件无论是通过打开得到的还是新建得到的是否被修改过 如果被修改过应当触发提示
-    // TODO:实践了两个方法暂时还没成功
+    if(editor->geteditor()->isModified())
+        if(!new_or_open_without_saving_event("New")) return;
 
     editor->geteditor()->clear();
     editor->geteditor()->setVisible(true);
@@ -144,9 +149,14 @@ void MainWindow::on_actionNew_triggered(){        // TODO:名字改了之后就�
 
     isNew=true;
     isOpen=false;
+    editor->geteditor()->setModified(false);
 }
 
 void MainWindow::on_actionOpen_triggered(){
+
+    if(editor->geteditor()->isModified())
+        if(!new_or_open_without_saving_event("Open")) return;
+
     QString fileName;
     fileName = QFileDialog::getOpenFileName(this,tr("Open file"));
 
@@ -187,7 +197,7 @@ void MainWindow::on_actionOpen_triggered(){
                 isOpen = true;
                 isNew = false;
                 lastFileName = fileName;    // 记录最近一次打开的文件名
-                lastFileContent=editor->geteditor()->text();    // 记录最近一次打开的文件内容 TODO:不觉得很傻逼吗 真的要这样搞？
+                editor->geteditor()->setModified(false);    // 置位为false 表示并未修改
             }
         }
     }
@@ -208,7 +218,7 @@ void MainWindow::on_actionSave_triggered(){
 
             if(str == "") return;
             QFile file(str);
-            qDebug()<<str;
+
             if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
                 QMessageBox::warning(this,tr("Warning"),tr("Open failed!"),QMessageBox::Ok);
                 return;
@@ -224,7 +234,7 @@ void MainWindow::on_actionSave_triggered(){
                 isNew = false;      // 重置为false
                 isOpen = true;      // 重置为true
                 lastFileName = str;
-                lastFileContent = text;
+                editor->geteditor()->setModified(false);    // 保存后置为未修改
 
                 QMessageBox::information(this,"Save","Successfully saved!",QMessageBox::Ok);
             }
@@ -245,7 +255,7 @@ void MainWindow::on_actionSave_triggered(){
                 textStream<<str;
                 file.close();
 
-                lastFileContent = str;
+                editor->geteditor()->setModified(false);    // 保存后置为未修改
 
                 QMessageBox::information(this,"Save","Successfully saved!",QMessageBox::Ok);
             }
@@ -285,10 +295,10 @@ void MainWindow::on_actionSave_As_triggered(){
 
         statusLabel->setText(fileName);
 
-        lastFileContent = str;
         lastFileName = fileName;
         isNew = false;
         isOpen = true;
+        editor->geteditor()->setModified(false);    // 保存后置为未修改
 
         QMessageBox::information(this,"Save","Successfully saved!",QMessageBox::Ok);
     }
@@ -296,30 +306,6 @@ void MainWindow::on_actionSave_As_triggered(){
 
 void MainWindow::on_actionExit_triggered(){
     this->close();
-}
-
-// 关闭窗口事件，重写closeEvent
-void MainWindow::closeEvent(QCloseEvent *event){
-    // 若未修改则，则接收关闭指示
-    if(editor->geteditor()->text() == lastFileContent){
-        event->accept();
-    }
-    // 否则弹出警告
-    else{
-        if(QMessageBox::warning(this,tr("Warning"),tr("Exit without being saved?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
-            event->accept();
-        else
-            event->ignore();
-    }
-}
-
-
-void MainWindow::on_actionCompileOutPut_triggered(){
-    ui->dockWidget_compile->setVisible(true);
-}
-
-void MainWindow::on_actionAssemblyOutPut_triggered(){
-    ui->dockWidget_assembly->setVisible(true);
 }
 
 void MainWindow::on_actionCut_triggered(){
@@ -357,6 +343,14 @@ void MainWindow::on_actionFind_triggered(){
     csBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
     hwBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
     findEdit->setFocus();
+}
+
+void MainWindow::on_actionCompileOutPut_triggered(){
+    ui->dockWidget_compile->setVisible(true);
+}
+
+void MainWindow::on_actionAssemblyOutPut_triggered(){
+    ui->dockWidget_assembly->setVisible(true);
 }
 
 // TODO:1按view中的只能出来不能回去（问题不大）
@@ -487,6 +481,34 @@ void MainWindow::assembly(QString type){
     return;
 }
 
+void MainWindow::on_actionAbout_seu_IDE_triggered(){
+    about=new FindTextDialog(this);
+    about->setModal(true);
+    about->show();
+}
+
+// 设置按钮可用与否
+void MainWindow::actionActive(bool act){
+
+    ui->actionSave->setEnabled(act);
+    ui->actionSave_As->setEnabled(act);
+
+    ui->actionUndo->setEnabled(act);
+    ui->actionRedo->setEnabled(act);
+    ui->actionCopy->setEnabled(act);
+    ui->actionCut->setEnabled(act);
+    ui->actionPaste->setEnabled(act);
+    ui->actionSelect_All->setEnabled(act);
+    ui->actionFind->setEnabled(act);
+    ui->actionReplace->setEnabled(act);
+
+    ui->actionCompile->setEnabled(act);
+    ui->actionAssemblyNew->setEnabled(act);     // TODO:new和append都是啥？？
+    ui->actionAssemblyAppend->setEnabled(act);
+    ui->actionCompileOutPut->setEnabled(act);
+    ui->actionAssemblyOutPut->setEnabled(act);
+}
+
 // 设置和取消大小写敏感
 void MainWindow::set_find_cs(){
     if(isCs == false){
@@ -528,10 +550,4 @@ void MainWindow::show_find_str(){
 void MainWindow::select_lex(){
     int type=lex->currentIndex();
     selectedlanguage = editor->setLexer(type);  // 接收当前类型
-}
-
-void MainWindow::on_actionAbout_seu_IDE_triggered(){
-    about=new FindTextDialog(this);
-    about->setModal(true);
-    about->show();
 }

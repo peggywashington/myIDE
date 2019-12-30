@@ -191,12 +191,12 @@ debug\qrc_img.cpp: ..\myIDE\img.qrc \
 		..\myIDE\img\hw.png \
 		..\myIDE\img\pull_down.png \
 		..\myIDE\img\select_all.png \
+		..\myIDE\img\logo.png \
 		..\myIDE\img\redo.png \
 		..\myIDE\img\replace.png \
 		..\myIDE\img\exit.png \
 		..\myIDE\img\copy.png \
 		..\myIDE\img\cs.png \
-		..\myIDE\img\name.png \
 		..\myIDE\img\new.png \
 		..\myIDE\img\paste.png \
 		..\myIDE\img\find.png
@@ -988,7 +988,7 @@ debug\mainwindow.obj: ..\myIDE\mainwindow.cpp ../myIDE/mainwindow.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QTextCodec \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qtextcodec.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtGui\QIcon \
-		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\QDebug
+		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtCore\qDebug
 
 debug\editorwidget.obj: ..\myIDE\editorwidget.cpp ../myIDE/editorwidget.h \
 		D:\coder\Qt\Qt5.9.4\5.9.4\msvc2017_64\include\QtWidgets\QWidget \

@@ -1,0 +1,11 @@
+     delay :   0)                          30000                        4($s8)
+  SECTION1 :   1)              j<         4($s8)              0       SECTION3
+           :   2)               j                                            _
+  SECTION3 :   3)             sub         4($s8)              1         8($s8)
+           :   4)                         8($s8)                        4($s8)
+           :   5)               j                                     SECTION1
+      main :   6)                              0                        4($s8)
+           :   7)             add         4($s8)              1         8($s8)
+           :   8)                         8($s8)                        4($s8)
+           :   9)           write         4($s8)                    0xfffffc60
+           :  10)           write         4($s8)                    0xfffffc62
