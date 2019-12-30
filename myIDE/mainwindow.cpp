@@ -92,16 +92,13 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     connect(lex, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
 
     // 编译和汇编结果显示在tab形式的窗体
-    this->tabifyDockWidget(ui->dockWidget_compile,ui->dockWidget_assembly);     //TODO:应该改成compileDockWidget
+    this->splitDockWidget(ui->dockWidget_compile,ui->dockWidget_assembly,Qt::Horizontal);     //TODO:应该改成compileDockWidget
     ui->dockWidget_compile->setVisible(false);
     ui->dockWidget_assembly->setVisible(false);
 
     // 底部状态栏显示当前打开文件路径
     statusLabel=new QLabel;
     ui->statusBar->addWidget(statusLabel);
-
-    //绑定菜单中File-Open按钮 使之能判断文件是否更改之后未保存 TODO:无法使之生效 考虑是否删掉
-    ui->actionOpen->installEventFilter(this);
 }
 
 MainWindow::~MainWindow(){
@@ -346,15 +343,18 @@ void MainWindow::on_actionFind_triggered(){
 }
 
 void MainWindow::on_actionCompileOutPut_triggered(){
-    ui->dockWidget_compile->setVisible(true);
+    if(ui->dockWidget_compile->isVisible())
+        ui->dockWidget_compile->setVisible(false);
+    else ui->dockWidget_compile->setVisible(true);
 }
 
 void MainWindow::on_actionAssemblyOutPut_triggered(){
-    ui->dockWidget_assembly->setVisible(true);
+    if(ui->dockWidget_assembly->isVisible())
+        ui->dockWidget_assembly->setVisible(false);
+    else ui->dockWidget_assembly->setVisible(true);
 }
 
 // TODO:1按view中的只能出来不能回去（问题不大）
-// TODO:2按一个只能出来一个 按两个不一样的才能出现tab状（还是不要tab形式了吧
 void MainWindow::on_actionCompile_triggered(){
 
     // 对于非miniC程序进行提醒无法编译
@@ -367,7 +367,6 @@ void MainWindow::on_actionCompile_triggered(){
     }
 
     on_actionSave_triggered();  // 编译前自动保存
-    ui->dockWidget_assembly->setVisible(false);     // TODO:其实不应该这样 这样的话让两个显示的过程中不会出现tab 和view的矛盾
     ui->dockWidget_compile->setVisible(true);
     ui->textEdit_compile_output->setReadOnly(true);
     ui->textEdit_compile_output->clear();
@@ -403,8 +402,9 @@ void MainWindow::on_actionCompile_triggered(){
 
     // wait
     while(true==dProcess->waitForFinished()){
-        // 将执行结果显示在下方complile文本框中
+        // 将执行结果显示在下方compiler文本框中
         QString outPath = path + "/cerror.txt";
+
         QFile file(outPath);
 
         if (file.open (QIODevice::ReadOnly | QIODevice::Text)){
@@ -431,7 +431,6 @@ void MainWindow::on_actionAssemblyAppend_triggered(){
 void MainWindow::assembly(QString type){
 
     on_actionSave_triggered();
-    ui->dockWidget_compile->setVisible(false);
     ui->dockWidget_assembly->setVisible(true);
     ui->textEdit_assembly_output->setReadOnly(true);
     ui->textEdit_assembly_output->clear();

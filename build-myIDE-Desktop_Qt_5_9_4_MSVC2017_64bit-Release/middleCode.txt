@@ -9,3 +9,5 @@
            :   8)                         8($s8)                        4($s8)
            :   9)           write         4($s8)                    0xfffffc60
            :  10)           write         4($s8)                    0xfffffc62
+           :  11)            call              0          delay               
+           :  12)                              #                       14($s8)

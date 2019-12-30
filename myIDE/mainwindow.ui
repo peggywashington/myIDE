@@ -371,8 +371,11 @@
    </property>
   </action>
   <action name="actionCompileOutPut">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>AssemblyOutput</string>
+    <string>CompileOutput</string>
    </property>
   </action>
   <action name="actionCompile">
@@ -384,8 +387,14 @@
    </property>
   </action>
   <action name="actionAssemblyOutPut">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>CompileOutput</string>
+    <string>AssemblyOutput</string>
    </property>
   </action>
   <action name="actionAssemblyNew">

@@ -143,10 +143,13 @@ public:
         actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
         actionCompileOutPut = new QAction(MainWindow);
         actionCompileOutPut->setObjectName(QStringLiteral("actionCompileOutPut"));
+        actionCompileOutPut->setCheckable(true);
         actionCompile = new QAction(MainWindow);
         actionCompile->setObjectName(QStringLiteral("actionCompile"));
         actionAssemblyOutPut = new QAction(MainWindow);
         actionAssemblyOutPut->setObjectName(QStringLiteral("actionAssemblyOutPut"));
+        actionAssemblyOutPut->setCheckable(true);
+        actionAssemblyOutPut->setChecked(false);
         actionAssemblyNew = new QAction(MainWindow);
         actionAssemblyNew->setObjectName(QStringLiteral("actionAssemblyNew"));
         actionAssemblyAppend = new QAction(MainWindow);
@@ -346,12 +349,12 @@ public:
 #endif // QT_NO_SHORTCUT
         actionAbout_seu_IDE->setText(QApplication::translate("MainWindow", "About SEU IDE", Q_NULLPTR));
         actionSave_As->setText(QApplication::translate("MainWindow", "Save As", Q_NULLPTR));
-        actionCompileOutPut->setText(QApplication::translate("MainWindow", "AssemblyOutput", Q_NULLPTR));
+        actionCompileOutPut->setText(QApplication::translate("MainWindow", "CompileOutput", Q_NULLPTR));
         actionCompile->setText(QApplication::translate("MainWindow", "Compile", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionCompile->setShortcut(QApplication::translate("MainWindow", "Ctrl+F5", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAssemblyOutPut->setText(QApplication::translate("MainWindow", "CompileOutput", Q_NULLPTR));
+        actionAssemblyOutPut->setText(QApplication::translate("MainWindow", "AssemblyOutput", Q_NULLPTR));
         actionAssemblyNew->setText(QApplication::translate("MainWindow", "new", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionAssemblyNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+F9", Q_NULLPTR));

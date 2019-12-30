@@ -36,7 +36,7 @@ start:
              sw $s1,4($s8)
              j SECTION1
       main : or $s8,$0,$sp
-             addi $sp,$sp,8
+             addi $sp,$sp,14
              ori $s0,$0,0
              addi $s1,$s0,1
              lui $s2,0xffff
@@ -45,5 +45,7 @@ start:
              lui $s3,0xffff
              addiu $s3,$s3,0xfc62
              sw $s1,0($s3)
+             jal delay
+             sw $v0,14($s8)
              sw $s1,4($s8)
   DEADLOOP : j DEADLOOP
