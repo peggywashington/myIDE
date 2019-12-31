@@ -39,27 +39,34 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     // new查找框以及相关按钮
     searchWidget = new QWidget(this);
     ui->mainToolBar->addWidget(searchWidget);
-    QHBoxLayout* searchLayout = new QHBoxLayout(searchWidget);
-    QSpacerItem* spacer = new QSpacerItem(40,24,QSizePolicy::Expanding,QSizePolicy::Minimum);
-    searchLayout->addItem(spacer);
-    findBtn = new QPushButton(tr(""),searchWidget); // 查找按钮
+    QVBoxLayout* searchLayout = new QVBoxLayout(searchWidget);
+    searchLayout->setMargin(0);
+    searchLayout->setSpacing(0);
+    QSpacerItem* VSpacer = new QSpacerItem(0,0,QSizePolicy::Minimum,QSizePolicy::Minimum);
+    searchLayout->addItem(VSpacer);
+    QSpacerItem* HSpacer = new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum);
+
+    findWidget = new QWidget(searchWidget);
+    QHBoxLayout* findLayout = new QHBoxLayout(findWidget);
+    findLayout->addItem(HSpacer);
+    findBtn = new QPushButton(tr(""),findWidget); // 查找按钮
     findBtn->setIcon(QIcon(":/img/img/find.png"));
     findBtn->setMaximumHeight(35);
     findBtn->setMaximumWidth(35);
     findBtn->setToolTip(tr("Search"));
     findBtn->setStyleSheet("QPushButton{""border-radius:1px}");
-    findEdit = new QLineEdit(searchWidget);     // 查找框
+    findEdit = new QLineEdit(findWidget);     // 查找框
     findEdit->setFont(QFont("Consolas", 11));
     findEdit->setMaximumWidth(200);
     findEdit->setMaximumHeight(35);
     findEdit->setStyleSheet("QLineEdit{""border-radius:5px}");
-    csBtn = new QPushButton(tr(""),searchWidget);   // 大小写敏感按钮
+    csBtn = new QPushButton(tr(""),findWidget);   // 大小写敏感按钮
     csBtn->setIcon(QIcon(":/img/img/cs.png"));
     csBtn->setMaximumHeight(35);
     csBtn->setMaximumWidth(35);
     csBtn->setToolTip(tr("Match case"));
     csBtn->setStyleSheet("QPushButton{""border-radius:1px}");
-    hwBtn = new QPushButton(tr(""),searchWidget);   // 全词匹配按钮
+    hwBtn = new QPushButton(tr(""),findWidget);   // 全词匹配按钮
     hwBtn->setIcon(QIcon(":/img/img/hw.png"));
     hwBtn->setMaximumHeight(35);
     hwBtn->setMaximumWidth(35);
@@ -69,6 +76,24 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     findBtn->setEnabled(false);
     csBtn->setEnabled(false);
     hwBtn->setEnabled(false);
+
+    replaceWidget = new QWidget(searchWidget);
+    QHBoxLayout* replaceLayout = new QHBoxLayout(replaceWidget);
+    replaceLayout->addItem(HSpacer);
+    replaceBtn = new QPushButton(tr(""),replaceWidget); // 查找按钮
+    replaceBtn->setIcon(QIcon(":/img/img/replace.png"));
+    replaceBtn->setMaximumHeight(35);
+    replaceBtn->setMaximumWidth(35);
+    replaceBtn->setToolTip(tr("Search"));
+    replaceBtn->setStyleSheet("QPushButton{""border-radius:1px}");
+    replaceEdit = new QLineEdit(replaceWidget);     // 查找框
+    replaceEdit->setFont(QFont("Consolas", 11));
+    replaceEdit->setMaximumWidth(200);
+    replaceEdit->setMaximumHeight(35);
+    replaceEdit->setStyleSheet("QLineEdit{""border-radius:5px}");
+    replaceEdit->setEnabled(false);
+    replaceBtn->setEnabled(false);
+    replaceWidget->setVisible(false);
     // 词法选择框
     lexCbBox=new QComboBox(this);
     lexCbBox->setMinimumHeight(25);
@@ -80,22 +105,29 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
                        "QComboBox::drop-down {border-top-right-radius: 3px;border-bottom-right-radius: 3px;}"
                        "QComboBox::down-arrow {image: url(:/img/img/pull_down.png);padding-right: 10px}");
     // 组件放进布局
-    searchLayout->addWidget(lexCbBox);
-    searchLayout->addWidget(hwBtn);
-    searchLayout->addWidget(csBtn);
-    searchLayout->addWidget(findEdit);
-    searchLayout->addWidget(findBtn);
+    findLayout->addWidget(lexCbBox);
+    findLayout->addWidget(hwBtn);
+    findLayout->addWidget(csBtn);
+    findLayout->addWidget(findEdit);
+    findLayout->addWidget(findBtn);
+    replaceLayout->addWidget(replaceEdit);
+    replaceLayout->addWidget(replaceBtn);
+    searchLayout->addWidget(findWidget);
+    searchLayout->addWidget(replaceWidget);
     // 通信机制
     connect(findBtn,SIGNAL(clicked(bool)),this,SLOT(show_find_str()));
     connect(csBtn,SIGNAL(clicked(bool)),this,SLOT(set_find_cs()));
     connect(hwBtn,SIGNAL(clicked(bool)),this,SLOT(set_find_hw()));
+    connect(findEdit,SIGNAL(textChanged(QString)),this,SLOT(find_text_changed()));  // 如果查找框内容改变触发
     connect(findEdit, SIGNAL(returnPressed()), findBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //光标在查找框时查找按钮和回车等效
+    connect(replaceBtn,SIGNAL(clicked(bool)),this,SLOT(replace_find_str()));
+    connect(replaceEdit, SIGNAL(returnPressed()), replaceBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //光标在替换框时查找按钮和回车等效
     connect(lexCbBox, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
 
     // 编译和汇编结果显示在tab形式的窗体
-    this->splitDockWidget(ui->dockWidget_compile,ui->dockWidget_assembly,Qt::Horizontal);     //TODO:应该改成compileDockWidget
-    ui->dockWidget_compile->setVisible(false);
-    ui->dockWidget_assembly->setVisible(false);
+    this->splitDockWidget(ui->dockWidgetCompile,ui->dockWidgetAssembly,Qt::Horizontal);
+    ui->dockWidgetCompile->setVisible(false);
+    ui->dockWidgetAssembly->setVisible(false);
 
     // 底部状态栏显示当前打开文件路径
     statusLabel=new QLabel;
@@ -117,7 +149,7 @@ bool MainWindow::newOrOpenWithoutSavingEvent(QString mode){
     msgBox.addButton(okbtn,QMessageBox::AcceptRole);
     msgBox.addButton(cancelbtn,QMessageBox::RejectRole);
     msgBox.exec();
-    if (msgBox.clickedButton() == okbtn) return true;
+    if(msgBox.clickedButton() == okbtn) return true;
     else return false;
 }
 
@@ -134,7 +166,7 @@ void MainWindow::closeEvent(QCloseEvent *event){
     }
 }
 
-void MainWindow::on_actionNew_triggered(){        // TODO:名字改了之后就不对了。。。
+void MainWindow::on_actionNew_triggered(){
 
     if(editor->geteditor()->isModified())
         if(!newOrOpenWithoutSavingEvent("New")) return;
@@ -181,8 +213,8 @@ void MainWindow::on_actionOpen_triggered(){
             else{
                 editor->geteditor()->clear();
                 editor->geteditor()->setVisible(true);
-                ui->textEdit_compile_output->clear();
-                ui->textEdit_assembly_output->clear();
+                ui->textEditCompileOutput->clear();
+                ui->textEditAssemblyOutput->clear();
 
                 actionActive(true);
 
@@ -344,21 +376,38 @@ void MainWindow::on_actionFind_triggered(){
     findEdit->setFocus();
 }
 
+// 仅当 菜单选择替换 or ctrl+R之后
+void MainWindow::on_actionReplace_triggered(){
+    on_actionFind_triggered();
+    if(replaceWidget->isVisible()){
+        replaceWidget->setVisible(false);
+        return;
+    }
+    else{
+        replaceWidget->setVisible(true);
+        replaceEdit->setEnabled(true);
+        replaceBtn->setEnabled(true);
+
+        replaceBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
+        replaceEdit->setFocus();
+    }
+}
+
 void MainWindow::on_actionCompileOutPut_triggered(){
-    if(ui->dockWidget_compile->isVisible()){
-        ui->dockWidget_compile->setVisible(false);
+    if(ui->dockWidgetCompile->isVisible()){
+        ui->dockWidgetCompile->setVisible(false);
         ui->actionCompile->setChecked(false);
     }
     else{
-        ui->dockWidget_compile->setVisible(true);
+        ui->dockWidgetCompile->setVisible(true);
         ui->actionCompile->setChecked(true);
     }
 }
 
 void MainWindow::on_actionAssemblyOutPut_triggered(){
-    if(ui->dockWidget_assembly->isVisible())
-        ui->dockWidget_assembly->setVisible(false);
-    else ui->dockWidget_assembly->setVisible(true);
+    if(ui->dockWidgetAssembly->isVisible())
+        ui->dockWidgetAssembly->setVisible(false);
+    else ui->dockWidgetAssembly->setVisible(true);
 }
 
 void MainWindow::on_actionCompile_triggered(){
@@ -373,10 +422,10 @@ void MainWindow::on_actionCompile_triggered(){
     }
 
     on_actionSave_triggered();  // 编译前自动保存
-    ui->dockWidget_compile->setVisible(true);
-    ui->textEdit_compile_output->setReadOnly(true);
-    ui->textEdit_compile_output->clear();
-    ui->textEdit_compile_output->append("Compile file:"+lastFileName);
+    ui->dockWidgetCompile->setVisible(true);
+    ui->textEditCompileOutput->setReadOnly(true);
+    ui->textEditCompileOutput->clear();
+    ui->textEditCompileOutput->append("Compile file:"+lastFileName);
 
     QString filename=lastFileName;
     QFile file(filename);
@@ -417,12 +466,12 @@ void MainWindow::on_actionCompile_triggered(){
             QByteArray all = file.readAll();
             QTextCodec *codec = QTextCodec::codecForName("GBK");
             QString ReadyText = codec->toUnicode(all);
-            ui->textEdit_compile_output->append(ReadyText);
+            ui->textEditCompileOutput->append(ReadyText);
         }
         return;
     }
 
-    ui->textEdit_compile_output->append("Process failed to start, please check!");
+    ui->textEditCompileOutput->append("Process failed to start, please check!");
     return;
 }
 
@@ -437,10 +486,10 @@ void MainWindow::on_actionAssemblyAppend_triggered(){
 void MainWindow::assembly(QString type){
 
     on_actionSave_triggered();
-    ui->dockWidget_assembly->setVisible(true);
-    ui->textEdit_assembly_output->setReadOnly(true);
-    ui->textEdit_assembly_output->clear();
-    ui->textEdit_assembly_output->append("Assembly file:"+lastFileName);
+    ui->dockWidgetAssembly->setVisible(true);
+    ui->textEditAssemblyOutput->setReadOnly(true);
+    ui->textEditAssemblyOutput->clear();
+    ui->textEditAssemblyOutput->append("Assembly file:"+lastFileName);
 
     QString filename=lastFileName;
     QFile file(filename);
@@ -477,12 +526,12 @@ void MainWindow::assembly(QString type){
             QByteArray all = file.readAll();
             QTextCodec *codec = QTextCodec::codecForName("GBK");
             QString ReadyText = codec->toUnicode(all);
-            ui->textEdit_assembly_output->append(ReadyText);
+            ui->textEditAssemblyOutput->append(ReadyText);
         }
         return;
     }
 
-    ui->textEdit_assembly_output->append("Process failed to start, please check!");
+    ui->textEditAssemblyOutput->append("Process failed to start, please check!");
     return;
 }
 
@@ -514,8 +563,15 @@ void MainWindow::actionActive(bool act){
     ui->actionAssemblyOutPut->setEnabled(act);
 }
 
+// 如果查找框内容改变就触发
+void MainWindow::find_text_changed(){
+    QString docText = editor->geteditor()->text();
+    editor->geteditor()->SendScintilla(QsciScintilla::SCI_INDICATORCLEARRANGE, 0, docText.length());    // 清除上一波高亮
+}
+
 // 设置和取消大小写敏感
 void MainWindow::set_find_cs(){
+    find_text_changed();
     if(isCs == false){
         isCs = true;
         csBtn->setStyleSheet("QPushButton{""background-color:rgb(204,204,204);""border-radius:1px}");
@@ -528,6 +584,7 @@ void MainWindow::set_find_cs(){
 
 // 设置和取消全词匹配
 void MainWindow::set_find_hw(){
+    find_text_changed();
     if(isHw == false){
         isHw = true;
         hwBtn->setStyleSheet("QPushButton{""background-color:rgb(204,204,204);""border-radius:1px}");
@@ -540,32 +597,37 @@ void MainWindow::set_find_hw(){
 
 // 显示查找结果
 void MainWindow::show_find_str(){
-//    QString s=findEdit->text();
-//    if(editor->geteditor()->findFirst(s,0,isCs,isHw,1)){
-//        // 找到后高亮显示
-//        QPalette palette = editor->geteditor()->palette();
-//        palette.setColor(QPalette::Highlight,palette.color(QPalette::Active,QPalette::Highlight));
-//        editor->geteditor()->setPalette(palette);
-//    }
-//    else
-//        QMessageBox::information(this,tr("Warning"),tr("Find none!"),QMessageBox::Ok);
 
-    editor->geteditor()->SendScintilla(QsciScintilla::SCI_MARKERDELETEALL);         // 不行
-//    editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INDICSETSTYLE,0, QsciScintilla::INDIC_FULLBOX);
-
-    QString docText = editor->geteditor()->text();   // 应该需要存下全部的text，恶心
-    QString findText=findEdit->text();
-    int end = docText.lastIndexOf(findText);    // findText应该是待找字符串叭 可以查一下QString的lastIndexOf函数的参数情况（应该是文本中最后一个findText的我位置
-    int cur = -1;   // cursor从-1开始
-
-    if(end != -1) {
-       while(cur != end) {
-            cur = docText.indexOf(findText,cur+1);      // 应该cursor向下走
-            editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INDICATORFILLRANGE,cur,
-                findText.length());     //应该是用于高亮的函数 从cursor处开始，亮一个findText的长度
-       }
+    QString docText = editor->geteditor()->text();
+    QString findText= findEdit->text();
+    if(!editor->geteditor()->findFirst(findText,0,isCs,isHw,1)){    // 1=到文档底部回转
+        QMessageBox::information(this,tr("Warning"),tr("Find none!"),QMessageBox::Ok);
+        find_text_changed();
+        return;
     }
-    // TODO:高亮颜色 问题不大；按第二次没清空 哭
+
+    // 以下标注整个文档中所有的匹配字符
+//    int end;
+//    if(isCs==false)
+//        end = docText.lastIndexOf(findText,-1,Qt::CaseInsensitive);    // 文本中最后一个findText的位置
+//    else end = docText.lastIndexOf(findText);    // 文本中最后一个findText的位置
+//    int cur = -1;   // cursor从-1开始
+
+//    // FIXME:全词匹配还不行
+//    if(end != -1) {
+//        while(cur != end) {
+//            if(isCs==false)
+//                cur = docText.indexOf(findText,cur+1,Qt::CaseInsensitive);      // cursor向下走
+//            else cur = docText.indexOf(findText,cur+1);
+//            editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INDICSETSTYLE,0,QsciScintilla::INDIC_BOX);
+//            editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INDICATORFILLRANGE,cur,findText.length());     // 设置高亮
+//       }
+//    }
+}
+
+void MainWindow::replace_find_str(){
+    QString replaceText= replaceEdit->text();
+    editor->geteditor()->replace(replaceText);
 }
 
 // 选择语法

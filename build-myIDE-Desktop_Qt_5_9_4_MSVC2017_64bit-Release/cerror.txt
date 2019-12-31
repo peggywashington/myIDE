@@ -1,0 +1,7 @@
+error:  line 3 - 0 : 语法错误
+error:  line 4 - 0 : 语法错误
+error:  line 6 : 变量'c'未定义或未赋值。
+error:  line 11 - 0 : 语法错误
+error:  line 12 - 0 : 语法错误
+编译失败。
+产生了 5 个错误

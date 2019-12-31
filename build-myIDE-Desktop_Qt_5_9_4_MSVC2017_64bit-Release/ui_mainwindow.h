@@ -59,14 +59,14 @@ public:
     QMenu *menu_3;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
-    QDockWidget *dockWidget_compile;
-    QWidget *dockWidgetContents_compile;
+    QDockWidget *dockWidgetCompile;
+    QWidget *widgetCompileContents;
     QGridLayout *gridLayout_4;
-    QTextEdit *textEdit_compile_output;
-    QDockWidget *dockWidget_assembly;
-    QWidget *dockWidgetContents_assembly;
+    QTextEdit *textEditCompileOutput;
+    QDockWidget *dockWidgetAssembly;
+    QWidget *widgetAssemblyContents;
     QGridLayout *gridLayout_2;
-    QTextEdit *textEdit_assembly_output;
+    QTextEdit *textEditAssemblyOutput;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -194,61 +194,61 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
-        dockWidget_compile = new QDockWidget(MainWindow);
-        dockWidget_compile->setObjectName(QStringLiteral("dockWidget_compile"));
+        dockWidgetCompile = new QDockWidget(MainWindow);
+        dockWidgetCompile->setObjectName(QStringLiteral("dockWidgetCompile"));
         QFont font1;
         font1.setFamily(QStringLiteral("Consolas"));
         font1.setPointSize(10);
         font1.setBold(false);
         font1.setItalic(false);
         font1.setWeight(50);
-        dockWidget_compile->setFont(font1);
-        dockWidget_compile->setStyleSheet(QStringLiteral("font: 10pt \"Consolas\";"));
-        dockWidget_compile->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
-        dockWidgetContents_compile = new QWidget();
-        dockWidgetContents_compile->setObjectName(QStringLiteral("dockWidgetContents_compile"));
-        gridLayout_4 = new QGridLayout(dockWidgetContents_compile);
+        dockWidgetCompile->setFont(font1);
+        dockWidgetCompile->setStyleSheet(QStringLiteral("font: 10pt \"Consolas\";"));
+        dockWidgetCompile->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
+        widgetCompileContents = new QWidget();
+        widgetCompileContents->setObjectName(QStringLiteral("widgetCompileContents"));
+        gridLayout_4 = new QGridLayout(widgetCompileContents);
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
-        textEdit_compile_output = new QTextEdit(dockWidgetContents_compile);
-        textEdit_compile_output->setObjectName(QStringLiteral("textEdit_compile_output"));
-        textEdit_compile_output->setFont(font1);
-        textEdit_compile_output->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+        textEditCompileOutput = new QTextEdit(widgetCompileContents);
+        textEditCompileOutput->setObjectName(QStringLiteral("textEditCompileOutput"));
+        textEditCompileOutput->setFont(font1);
+        textEditCompileOutput->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
-        gridLayout_4->addWidget(textEdit_compile_output, 0, 0, 1, 1);
+        gridLayout_4->addWidget(textEditCompileOutput, 0, 0, 1, 1);
 
-        dockWidget_compile->setWidget(dockWidgetContents_compile);
-        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidget_compile);
-        dockWidget_assembly = new QDockWidget(MainWindow);
-        dockWidget_assembly->setObjectName(QStringLiteral("dockWidget_assembly"));
+        dockWidgetCompile->setWidget(widgetCompileContents);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidgetCompile);
+        dockWidgetAssembly = new QDockWidget(MainWindow);
+        dockWidgetAssembly->setObjectName(QStringLiteral("dockWidgetAssembly"));
         QFont font2;
         font2.setFamily(QStringLiteral("Consolas"));
         font2.setPointSize(10);
-        dockWidget_assembly->setFont(font2);
-        dockWidget_assembly->setFloating(false);
-        dockWidget_assembly->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
-        dockWidgetContents_assembly = new QWidget();
-        dockWidgetContents_assembly->setObjectName(QStringLiteral("dockWidgetContents_assembly"));
-        gridLayout_2 = new QGridLayout(dockWidgetContents_assembly);
+        dockWidgetAssembly->setFont(font2);
+        dockWidgetAssembly->setFloating(false);
+        dockWidgetAssembly->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
+        widgetAssemblyContents = new QWidget();
+        widgetAssemblyContents->setObjectName(QStringLiteral("widgetAssemblyContents"));
+        gridLayout_2 = new QGridLayout(widgetAssemblyContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        textEdit_assembly_output = new QTextEdit(dockWidgetContents_assembly);
-        textEdit_assembly_output->setObjectName(QStringLiteral("textEdit_assembly_output"));
+        textEditAssemblyOutput = new QTextEdit(widgetAssemblyContents);
+        textEditAssemblyOutput->setObjectName(QStringLiteral("textEditAssemblyOutput"));
         QFont font3;
         font3.setFamily(QStringLiteral("Consolas"));
         font3.setPointSize(10);
         font3.setBold(false);
         font3.setWeight(50);
-        textEdit_assembly_output->setFont(font3);
-        textEdit_assembly_output->setUndoRedoEnabled(false);
-        textEdit_assembly_output->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+        textEditAssemblyOutput->setFont(font3);
+        textEditAssemblyOutput->setUndoRedoEnabled(false);
+        textEditAssemblyOutput->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
-        gridLayout_2->addWidget(textEdit_assembly_output, 0, 0, 1, 1);
+        gridLayout_2->addWidget(textEditAssemblyOutput, 0, 0, 1, 1);
 
-        dockWidget_assembly->setWidget(dockWidgetContents_assembly);
-        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidget_assembly);
+        dockWidgetAssembly->setWidget(widgetAssemblyContents);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidgetAssembly);
 
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
@@ -293,8 +293,8 @@ public:
         mainToolBar->addSeparator();
 
         retranslateUi(MainWindow);
-        QObject::connect(dockWidget_compile, SIGNAL(visibilityChanged(bool)), actionCompileOutPut, SLOT(setChecked(bool)));
-        QObject::connect(dockWidget_assembly, SIGNAL(visibilityChanged(bool)), actionAssemblyOutPut, SLOT(setChecked(bool)));
+        QObject::connect(dockWidgetCompile, SIGNAL(visibilityChanged(bool)), actionCompileOutPut, SLOT(setChecked(bool)));
+        QObject::connect(dockWidgetAssembly, SIGNAL(visibilityChanged(bool)), actionAssemblyOutPut, SLOT(setChecked(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -348,7 +348,7 @@ public:
 #endif // QT_NO_SHORTCUT
         actionReplace->setText(QApplication::translate("MainWindow", "Replace", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        actionReplace->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", Q_NULLPTR));
+        actionReplace->setShortcut(QApplication::translate("MainWindow", "Ctrl+R", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
         actionAbout_seu_IDE->setText(QApplication::translate("MainWindow", "About SEU IDE", Q_NULLPTR));
         actionSave_As->setText(QApplication::translate("MainWindow", "Save As", Q_NULLPTR));
@@ -372,8 +372,8 @@ public:
         menuAssembly->setTitle(QApplication::translate("MainWindow", "Assembly", Q_NULLPTR));
         menu_5->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("MainWindow", "View", Q_NULLPTR));
-        dockWidget_compile->setWindowTitle(QApplication::translate("MainWindow", "Compile", Q_NULLPTR));
-        dockWidget_assembly->setWindowTitle(QApplication::translate("MainWindow", "Assembly", Q_NULLPTR));
+        dockWidgetCompile->setWindowTitle(QApplication::translate("MainWindow", "Compile", Q_NULLPTR));
+        dockWidgetAssembly->setWindowTitle(QApplication::translate("MainWindow", "Assembly", Q_NULLPTR));
     } // retranslateUi
 
 };

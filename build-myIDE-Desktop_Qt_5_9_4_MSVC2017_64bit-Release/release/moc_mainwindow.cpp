@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[24];
-    char stringdata0[549];
+    QByteArrayData data[27];
+    char stringdata0[611];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,16 +45,19 @@ QT_MOC_LITERAL(10, 206, 29), // "on_actionSelect_All_triggered"
 QT_MOC_LITERAL(11, 236, 23), // "on_actionUndo_triggered"
 QT_MOC_LITERAL(12, 260, 23), // "on_actionRedo_triggered"
 QT_MOC_LITERAL(13, 284, 23), // "on_actionFind_triggered"
-QT_MOC_LITERAL(14, 308, 32), // "on_actionCompileOutPut_triggered"
-QT_MOC_LITERAL(15, 341, 33), // "on_actionAssemblyOutPut_trigg..."
-QT_MOC_LITERAL(16, 375, 26), // "on_actionCompile_triggered"
-QT_MOC_LITERAL(17, 402, 30), // "on_actionAssemblyNew_triggered"
-QT_MOC_LITERAL(18, 433, 33), // "on_actionAssemblyAppend_trigg..."
-QT_MOC_LITERAL(19, 467, 32), // "on_actionAbout_seu_IDE_triggered"
-QT_MOC_LITERAL(20, 500, 10), // "select_lex"
-QT_MOC_LITERAL(21, 511, 11), // "set_find_cs"
-QT_MOC_LITERAL(22, 523, 11), // "set_find_hw"
-QT_MOC_LITERAL(23, 535, 13) // "show_find_str"
+QT_MOC_LITERAL(14, 308, 26), // "on_actionReplace_triggered"
+QT_MOC_LITERAL(15, 335, 32), // "on_actionCompileOutPut_triggered"
+QT_MOC_LITERAL(16, 368, 33), // "on_actionAssemblyOutPut_trigg..."
+QT_MOC_LITERAL(17, 402, 26), // "on_actionCompile_triggered"
+QT_MOC_LITERAL(18, 429, 30), // "on_actionAssemblyNew_triggered"
+QT_MOC_LITERAL(19, 460, 33), // "on_actionAssemblyAppend_trigg..."
+QT_MOC_LITERAL(20, 494, 32), // "on_actionAbout_seu_IDE_triggered"
+QT_MOC_LITERAL(21, 527, 10), // "select_lex"
+QT_MOC_LITERAL(22, 538, 17), // "find_text_changed"
+QT_MOC_LITERAL(23, 556, 11), // "set_find_cs"
+QT_MOC_LITERAL(24, 568, 11), // "set_find_hw"
+QT_MOC_LITERAL(25, 580, 13), // "show_find_str"
+QT_MOC_LITERAL(26, 594, 16) // "replace_find_str"
 
     },
     "MainWindow\0on_actionNew_triggered\0\0"
@@ -66,14 +69,15 @@ QT_MOC_LITERAL(23, 535, 13) // "show_find_str"
     "on_actionSelect_All_triggered\0"
     "on_actionUndo_triggered\0on_actionRedo_triggered\0"
     "on_actionFind_triggered\0"
+    "on_actionReplace_triggered\0"
     "on_actionCompileOutPut_triggered\0"
     "on_actionAssemblyOutPut_triggered\0"
     "on_actionCompile_triggered\0"
     "on_actionAssemblyNew_triggered\0"
     "on_actionAssemblyAppend_triggered\0"
     "on_actionAbout_seu_IDE_triggered\0"
-    "select_lex\0set_find_cs\0set_find_hw\0"
-    "show_find_str"
+    "select_lex\0find_text_changed\0set_find_cs\0"
+    "set_find_hw\0show_find_str\0replace_find_str"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,7 +87,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      25,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -91,30 +95,36 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  124,    2, 0x08 /* Private */,
-       3,    0,  125,    2, 0x08 /* Private */,
-       4,    0,  126,    2, 0x08 /* Private */,
-       5,    0,  127,    2, 0x08 /* Private */,
-       6,    0,  128,    2, 0x08 /* Private */,
-       7,    0,  129,    2, 0x08 /* Private */,
-       8,    0,  130,    2, 0x08 /* Private */,
-       9,    0,  131,    2, 0x08 /* Private */,
-      10,    0,  132,    2, 0x08 /* Private */,
-      11,    0,  133,    2, 0x08 /* Private */,
-      12,    0,  134,    2, 0x08 /* Private */,
-      13,    0,  135,    2, 0x08 /* Private */,
-      14,    0,  136,    2, 0x08 /* Private */,
-      15,    0,  137,    2, 0x08 /* Private */,
-      16,    0,  138,    2, 0x08 /* Private */,
-      17,    0,  139,    2, 0x08 /* Private */,
-      18,    0,  140,    2, 0x08 /* Private */,
-      19,    0,  141,    2, 0x08 /* Private */,
-      20,    0,  142,    2, 0x08 /* Private */,
-      21,    0,  143,    2, 0x08 /* Private */,
-      22,    0,  144,    2, 0x08 /* Private */,
-      23,    0,  145,    2, 0x08 /* Private */,
+       1,    0,  139,    2, 0x08 /* Private */,
+       3,    0,  140,    2, 0x08 /* Private */,
+       4,    0,  141,    2, 0x08 /* Private */,
+       5,    0,  142,    2, 0x08 /* Private */,
+       6,    0,  143,    2, 0x08 /* Private */,
+       7,    0,  144,    2, 0x08 /* Private */,
+       8,    0,  145,    2, 0x08 /* Private */,
+       9,    0,  146,    2, 0x08 /* Private */,
+      10,    0,  147,    2, 0x08 /* Private */,
+      11,    0,  148,    2, 0x08 /* Private */,
+      12,    0,  149,    2, 0x08 /* Private */,
+      13,    0,  150,    2, 0x08 /* Private */,
+      14,    0,  151,    2, 0x08 /* Private */,
+      15,    0,  152,    2, 0x08 /* Private */,
+      16,    0,  153,    2, 0x08 /* Private */,
+      17,    0,  154,    2, 0x08 /* Private */,
+      18,    0,  155,    2, 0x08 /* Private */,
+      19,    0,  156,    2, 0x08 /* Private */,
+      20,    0,  157,    2, 0x08 /* Private */,
+      21,    0,  158,    2, 0x08 /* Private */,
+      22,    0,  159,    2, 0x08 /* Private */,
+      23,    0,  160,    2, 0x08 /* Private */,
+      24,    0,  161,    2, 0x08 /* Private */,
+      25,    0,  162,    2, 0x08 /* Private */,
+      26,    0,  163,    2, 0x08 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -159,16 +169,19 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_actionUndo_triggered(); break;
         case 10: _t->on_actionRedo_triggered(); break;
         case 11: _t->on_actionFind_triggered(); break;
-        case 12: _t->on_actionCompileOutPut_triggered(); break;
-        case 13: _t->on_actionAssemblyOutPut_triggered(); break;
-        case 14: _t->on_actionCompile_triggered(); break;
-        case 15: _t->on_actionAssemblyNew_triggered(); break;
-        case 16: _t->on_actionAssemblyAppend_triggered(); break;
-        case 17: _t->on_actionAbout_seu_IDE_triggered(); break;
-        case 18: _t->select_lex(); break;
-        case 19: _t->set_find_cs(); break;
-        case 20: _t->set_find_hw(); break;
-        case 21: _t->show_find_str(); break;
+        case 12: _t->on_actionReplace_triggered(); break;
+        case 13: _t->on_actionCompileOutPut_triggered(); break;
+        case 14: _t->on_actionAssemblyOutPut_triggered(); break;
+        case 15: _t->on_actionCompile_triggered(); break;
+        case 16: _t->on_actionAssemblyNew_triggered(); break;
+        case 17: _t->on_actionAssemblyAppend_triggered(); break;
+        case 18: _t->on_actionAbout_seu_IDE_triggered(); break;
+        case 19: _t->select_lex(); break;
+        case 20: _t->find_text_changed(); break;
+        case 21: _t->set_find_cs(); break;
+        case 22: _t->set_find_hw(); break;
+        case 23: _t->show_find_str(); break;
+        case 24: _t->replace_find_str(); break;
         default: ;
         }
     }
@@ -200,13 +213,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 25;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 25)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 25;
     }
     return _id;
 }

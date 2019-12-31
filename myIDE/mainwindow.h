@@ -50,6 +50,7 @@ private slots:  // 槽函数
     void on_actionUndo_triggered();         // undo
     void on_actionRedo_triggered();         // redo
     void on_actionFind_triggered();         // 查找
+    void on_actionReplace_triggered();      // 替换
 
     // menu-view
     void on_actionCompileOutPut_triggered();    // 开关编译结果框
@@ -64,23 +65,29 @@ private slots:  // 槽函数
     void on_actionAbout_seu_IDE_triggered();
 
     // toolbar
-    void select_lex();      // 词法选择
-    void set_find_cs();     // 设置查找大小写敏感
-    void set_find_hw();     // 设置查找全词匹配
-    void show_find_str();   // 高亮查找结果
+    void select_lex();          // 词法选择
+    void find_text_changed();   // 若查找框内容改变 清除上一波高亮
+    void set_find_cs();         // 设置查找大小写敏感
+    void set_find_hw();         // 设置查找全词匹配
+    void show_find_str();       // 高亮查找结果
+    void replace_find_str();    // 替换查找结果
 
 private:
     Ui::MainWindow *ui;
     // 组件
     editorWidget *editor;       // 代码编辑框
     QComboBox *lexCbBox;        // 词法选择框
-    QWidget *searchWidget;      // 查找组件
+    QWidget *searchWidget;      // 搜索（查找+替换）组件
+    QWidget *findWidget;        // 查找组件
         QLineEdit *findEdit;    // 查找输入框
         QPushButton *findBtn;   // 查找按钮
         QPushButton *csBtn;     // 大小写敏感按钮
         QPushButton *hwBtn;     // 全词匹配按钮
+    QWidget *replaceWidget;     // 替换组件
+        QLineEdit *replaceEdit;    // 查找输入框
+        QPushButton *replaceBtn;   // 查找按钮
     QLabel *statusLabel;        // 底部状态栏显示当前打开的文件名
-    AboutDialog *about;      // about对话框
+    AboutDialog *about;         // about对话框
 
     // 相关标记
     bool isOpen=false;      // 当前文件是否为通过打开得到的

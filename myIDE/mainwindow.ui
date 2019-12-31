@@ -134,7 +134,7 @@
    <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="dockWidget_compile">
+  <widget class="QDockWidget" name="dockWidgetCompile">
    <property name="font">
     <font>
      <family>Consolas</family>
@@ -156,10 +156,10 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_compile">
+   <widget class="QWidget" name="widgetCompileContents">
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="0" column="0">
-      <widget class="QTextEdit" name="textEdit_compile_output">
+      <widget class="QTextEdit" name="textEditCompileOutput">
        <property name="font">
         <font>
          <family>Consolas</family>
@@ -177,7 +177,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget_assembly">
+  <widget class="QDockWidget" name="dockWidgetAssembly">
    <property name="font">
     <font>
      <family>Consolas</family>
@@ -196,10 +196,10 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_assembly">
+   <widget class="QWidget" name="widgetAssemblyContents">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <widget class="QTextEdit" name="textEdit_assembly_output">
+      <widget class="QTextEdit" name="textEditAssemblyOutput">
        <property name="font">
         <font>
          <family>Consolas</family>
@@ -360,7 +360,7 @@
     <string>Replace</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+H</string>
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionAbout_seu_IDE">
@@ -423,7 +423,7 @@
  </resources>
  <connections>
   <connection>
-   <sender>dockWidget_compile</sender>
+   <sender>dockWidgetCompile</sender>
    <signal>visibilityChanged(bool)</signal>
    <receiver>actionCompileOutPut</receiver>
    <slot>setChecked(bool)</slot>
@@ -433,13 +433,13 @@
      <y>702</y>
     </hint>
     <hint type="destinationlabel">
-     <x>323</x>
-     <y>702</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>dockWidget_assembly</sender>
+   <sender>dockWidgetAssembly</sender>
    <signal>visibilityChanged(bool)</signal>
    <receiver>actionAssemblyOutPut</receiver>
    <slot>setChecked(bool)</slot>
