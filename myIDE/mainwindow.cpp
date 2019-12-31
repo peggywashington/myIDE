@@ -540,18 +540,35 @@ void MainWindow::set_find_hw(){
 
 // 显示查找结果
 void MainWindow::show_find_str(){
-    QString s=findEdit->text();
-    if(editor->geteditor()->findFirst(s,0,isCs,isHw,1)){
-        // 找到后高亮显示
-        QPalette palette = editor->geteditor()->palette();
-        palette.setColor(QPalette::Highlight,palette.color(QPalette::Active,QPalette::Highlight));
-        editor->geteditor()->setPalette(palette);
+//    QString s=findEdit->text();
+//    if(editor->geteditor()->findFirst(s,0,isCs,isHw,1)){
+//        // 找到后高亮显示
+//        QPalette palette = editor->geteditor()->palette();
+//        palette.setColor(QPalette::Highlight,palette.color(QPalette::Active,QPalette::Highlight));
+//        editor->geteditor()->setPalette(palette);
+//    }
+//    else
+//        QMessageBox::information(this,tr("Warning"),tr("Find none!"),QMessageBox::Ok);
+
+    editor->geteditor()->SendScintilla(QsciScintilla::SCI_MARKERDELETEALL);         // 不行
+//    editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INDICSETSTYLE,0, QsciScintilla::INDIC_FULLBOX);
+
+    QString docText = editor->geteditor()->text();   // 应该需要存下全部的text，恶心
+    QString findText=findEdit->text();
+    int end = docText.lastIndexOf(findText);    // findText应该是待找字符串叭 可以查一下QString的lastIndexOf函数的参数情况（应该是文本中最后一个findText的我位置
+    int cur = -1;   // cursor从-1开始
+
+    if(end != -1) {
+       while(cur != end) {
+            cur = docText.indexOf(findText,cur+1);      // 应该cursor向下走
+            editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INDICATORFILLRANGE,cur,
+                findText.length());     //应该是用于高亮的函数 从cursor处开始，亮一个findText的长度
+       }
     }
-    else
-        QMessageBox::information(this,tr("Warning"),tr("Find none!"),QMessageBox::Ok);
+    // TODO:高亮颜色 问题不大；按第二次没清空 哭
 }
 
-// 由选择语法高亮触发
+// 选择语法
 void MainWindow::select_lex(){
     int type=lexCbBox->currentIndex();
     selectedlanguage = editor->setLexer(type);  // 接收当前类型
