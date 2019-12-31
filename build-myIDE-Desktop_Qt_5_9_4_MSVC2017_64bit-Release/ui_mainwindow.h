@@ -257,8 +257,8 @@ public:
         menuBar->addAction(menu_5->menuAction());
         menu->addAction(actionNew);
         menu->addAction(actionOpen);
-        menu->addAction(actionSave);
         menu->addSeparator();
+        menu->addAction(actionSave);
         menu->addAction(actionSave_As);
         menu->addSeparator();
         menu->addAction(actionExit);
@@ -302,78 +302,81 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SEU IDE", Q_NULLPTR));
-        actionNew->setText(QApplication::translate("MainWindow", "New", Q_NULLPTR));
+        actionNew->setText(QApplication::translate("MainWindow", "\346\226\260\345\273\272", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionOpen->setText(QApplication::translate("MainWindow", "Open", Q_NULLPTR));
+        actionOpen->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionOpen->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionSave->setText(QApplication::translate("MainWindow", "Save", Q_NULLPTR));
+        actionSave->setText(QApplication::translate("MainWindow", "\344\277\235\345\255\230", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionExit->setText(QApplication::translate("MainWindow", "Exit", Q_NULLPTR));
+        actionExit->setText(QApplication::translate("MainWindow", "\351\200\200\345\207\272", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionExit->setShortcut(QApplication::translate("MainWindow", "Ctrl+E", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionUndo->setText(QApplication::translate("MainWindow", "Undo", Q_NULLPTR));
+        actionUndo->setText(QApplication::translate("MainWindow", "\346\222\244\351\224\200", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionUndo->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionRedo->setText(QApplication::translate("MainWindow", "Redo", Q_NULLPTR));
+        actionRedo->setText(QApplication::translate("MainWindow", "\351\207\215\345\201\232", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionRedo->setShortcut(QApplication::translate("MainWindow", "Ctrl+Y", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionCut->setText(QApplication::translate("MainWindow", "Cut", Q_NULLPTR));
+        actionCut->setText(QApplication::translate("MainWindow", "\345\211\252\345\210\207", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionCut->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionCopy->setText(QApplication::translate("MainWindow", "Copy", Q_NULLPTR));
+        actionCopy->setText(QApplication::translate("MainWindow", "\345\244\215\345\210\266", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionCopy->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionPaste->setText(QApplication::translate("MainWindow", "Paste", Q_NULLPTR));
+        actionPaste->setText(QApplication::translate("MainWindow", "\347\262\230\350\264\264", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionPaste->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionSelect_All->setText(QApplication::translate("MainWindow", "Select All", Q_NULLPTR));
+        actionSelect_All->setText(QApplication::translate("MainWindow", "\345\205\250\351\200\211", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionSelect_All->setShortcut(QApplication::translate("MainWindow", "Ctrl+A", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionFind->setText(QApplication::translate("MainWindow", "Find", Q_NULLPTR));
+        actionFind->setText(QApplication::translate("MainWindow", "\346\237\245\346\211\276", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionFind->setShortcut(QApplication::translate("MainWindow", "Ctrl+F", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionReplace->setText(QApplication::translate("MainWindow", "Replace", Q_NULLPTR));
+        actionReplace->setText(QApplication::translate("MainWindow", "\346\233\277\346\215\242", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionReplace->setShortcut(QApplication::translate("MainWindow", "Ctrl+R", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAbout_seu_IDE->setText(QApplication::translate("MainWindow", "About SEU IDE", Q_NULLPTR));
-        actionSave_As->setText(QApplication::translate("MainWindow", "Save As", Q_NULLPTR));
-        actionCompileOutPut->setText(QApplication::translate("MainWindow", "CompileOutput", Q_NULLPTR));
-        actionCompile->setText(QApplication::translate("MainWindow", "Compile", Q_NULLPTR));
+        actionAbout_seu_IDE->setText(QApplication::translate("MainWindow", "\345\205\263\344\272\216", Q_NULLPTR));
+        actionSave_As->setText(QApplication::translate("MainWindow", "\345\217\246\345\255\230\344\270\272", Q_NULLPTR));
+        actionCompileOutPut->setText(QApplication::translate("MainWindow", "\347\274\226\350\257\221\350\276\223\345\207\272", Q_NULLPTR));
+        actionCompile->setText(QApplication::translate("MainWindow", "\347\274\226\350\257\221", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionCompile->setShortcut(QApplication::translate("MainWindow", "Ctrl+F5", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAssemblyOutPut->setText(QApplication::translate("MainWindow", "AssemblyOutput", Q_NULLPTR));
-        actionAssemblyNew->setText(QApplication::translate("MainWindow", "new", Q_NULLPTR));
+        actionAssemblyOutPut->setText(QApplication::translate("MainWindow", "\346\261\207\347\274\226\350\276\223\345\207\272", Q_NULLPTR));
+        actionAssemblyNew->setText(QApplication::translate("MainWindow", "\345\206\231\345\205\245\345\210\260\346\226\260\346\226\207\344\273\266  ", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionAssemblyNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+F9", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAssemblyAppend->setText(QApplication::translate("MainWindow", "Append", Q_NULLPTR));
+        actionAssemblyAppend->setText(QApplication::translate("MainWindow", "\350\277\275\345\212\240\345\210\260\346\227\247\346\226\207\344\273\266", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionAssemblyAppend->setShortcut(QApplication::translate("MainWindow", "Ctrl+F10", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        menu->setTitle(QApplication::translate("MainWindow", "File", Q_NULLPTR));
-        menu_2->setTitle(QApplication::translate("MainWindow", "Edit", Q_NULLPTR));
-        menu_4->setTitle(QApplication::translate("MainWindow", "Build", Q_NULLPTR));
-        menuAssembly->setTitle(QApplication::translate("MainWindow", "Assembly", Q_NULLPTR));
-        menu_5->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
-        menu_3->setTitle(QApplication::translate("MainWindow", "View", Q_NULLPTR));
-        dockWidgetCompile->setWindowTitle(QApplication::translate("MainWindow", "Compile", Q_NULLPTR));
-        dockWidgetAssembly->setWindowTitle(QApplication::translate("MainWindow", "Assembly", Q_NULLPTR));
+        menu->setTitle(QApplication::translate("MainWindow", "\346\226\207\344\273\266 ", Q_NULLPTR));
+        menu_2->setTitle(QApplication::translate("MainWindow", "\347\274\226\350\276\221 ", Q_NULLPTR));
+        menu_4->setTitle(QApplication::translate("MainWindow", "\346\236\204\345\273\272 ", Q_NULLPTR));
+        menuAssembly->setTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226", Q_NULLPTR));
+        menu_5->setTitle(QApplication::translate("MainWindow", "\345\270\256\345\212\251 ", Q_NULLPTR));
+        menu_3->setTitle(QApplication::translate("MainWindow", "\350\247\206\345\233\276 ", Q_NULLPTR));
+#ifndef QT_NO_ACCESSIBILITY
+        dockWidgetCompile->setAccessibleName(QString());
+#endif // QT_NO_ACCESSIBILITY
+        dockWidgetCompile->setWindowTitle(QApplication::translate("MainWindow", "\347\274\226\350\257\221\350\276\223\345\207\272", Q_NULLPTR));
+        dockWidgetAssembly->setWindowTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226\350\276\223\345\207\272", Q_NULLPTR));
     } // retranslateUi
 
 };
