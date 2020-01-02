@@ -78,12 +78,14 @@
     <property name="title">
      <string>帮助 </string>
     </property>
-    <addaction name="actionAbout_seu_IDE"/>
+    <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menu_3">
     <property name="title">
      <string>视图 </string>
     </property>
+    <addaction name="actionToolBar"/>
+    <addaction name="separator"/>
     <addaction name="actionCompileOutPut"/>
     <addaction name="actionAssemblyOutPut"/>
    </widget>
@@ -366,7 +368,7 @@
     <string>Ctrl+R</string>
    </property>
   </action>
-  <action name="actionAbout_seu_IDE">
+  <action name="actionAbout">
    <property name="text">
     <string>关于</string>
    </property>
@@ -419,6 +421,17 @@
     <string>Ctrl+F10</string>
    </property>
   </action>
+  <action name="actionToolBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>工具栏</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
@@ -454,6 +467,22 @@
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionToolBar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>mainToolBar</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>649</x>
+     <y>43</y>
     </hint>
    </hints>
   </connection>

@@ -1,0 +1,11 @@
+error:  line 4 - 3 : lexical error
+error:  line 39 - 1 : lexical error
+error:  line 40 - 1 : lexical error
+error:  line 42 - 5 : lexical error
+error:  line 43 - 1 : lexical error
+error:  line 44 - 5 : lexical error
+error:  line 46 - 5 : lexical error
+error:  line 50 - 1 : lexical error
+error:  line 50 - 3 : lexical error
+error:  line 59 - 5 : lexical error
+error:  line 64 - 1 : lexical error

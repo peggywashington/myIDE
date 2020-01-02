@@ -62,7 +62,7 @@ private slots:  // 槽函数
     void on_actionAssemblyAppend_triggered();   // 汇编-在旧文件中追加内容  TODO:估计这个不用了
 
     // menu-help
-    void on_actionAbout_seu_IDE_triggered();
+    void on_actionAbout_triggered();
 
     // toolbar
     void select_lex();          // 词法选择

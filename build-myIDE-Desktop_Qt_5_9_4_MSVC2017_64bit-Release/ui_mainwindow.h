@@ -41,13 +41,14 @@ public:
     QAction *actionSelect_All;
     QAction *actionFind;
     QAction *actionReplace;
-    QAction *actionAbout_seu_IDE;
+    QAction *actionAbout;
     QAction *actionSave_As;
     QAction *actionCompileOutPut;
     QAction *actionCompile;
     QAction *actionAssemblyOutPut;
     QAction *actionAssemblyNew;
     QAction *actionAssemblyAppend;
+    QAction *actionToolBar;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMenuBar *menuBar;
@@ -137,8 +138,8 @@ public:
         QIcon icon12;
         icon12.addFile(QStringLiteral(":/img/img/replace.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionReplace->setIcon(icon12);
-        actionAbout_seu_IDE = new QAction(MainWindow);
-        actionAbout_seu_IDE->setObjectName(QStringLiteral("actionAbout_seu_IDE"));
+        actionAbout = new QAction(MainWindow);
+        actionAbout->setObjectName(QStringLiteral("actionAbout"));
         actionSave_As = new QAction(MainWindow);
         actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
         actionCompileOutPut = new QAction(MainWindow);
@@ -154,6 +155,10 @@ public:
         actionAssemblyNew->setObjectName(QStringLiteral("actionAssemblyNew"));
         actionAssemblyAppend = new QAction(MainWindow);
         actionAssemblyAppend->setObjectName(QStringLiteral("actionAssemblyAppend"));
+        actionToolBar = new QAction(MainWindow);
+        actionToolBar->setObjectName(QStringLiteral("actionToolBar"));
+        actionToolBar->setCheckable(true);
+        actionToolBar->setChecked(true);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -277,7 +282,9 @@ public:
         menu_4->addAction(menuAssembly->menuAction());
         menuAssembly->addAction(actionAssemblyNew);
         menuAssembly->addAction(actionAssemblyAppend);
-        menu_5->addAction(actionAbout_seu_IDE);
+        menu_5->addAction(actionAbout);
+        menu_3->addAction(actionToolBar);
+        menu_3->addSeparator();
         menu_3->addAction(actionCompileOutPut);
         menu_3->addAction(actionAssemblyOutPut);
         mainToolBar->addAction(actionNew);
@@ -295,6 +302,7 @@ public:
         retranslateUi(MainWindow);
         QObject::connect(dockWidgetCompile, SIGNAL(visibilityChanged(bool)), actionCompileOutPut, SLOT(setChecked(bool)));
         QObject::connect(dockWidgetAssembly, SIGNAL(visibilityChanged(bool)), actionAssemblyOutPut, SLOT(setChecked(bool)));
+        QObject::connect(actionToolBar, SIGNAL(toggled(bool)), mainToolBar, SLOT(setVisible(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -350,7 +358,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionReplace->setShortcut(QApplication::translate("MainWindow", "Ctrl+R", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAbout_seu_IDE->setText(QApplication::translate("MainWindow", "\345\205\263\344\272\216", Q_NULLPTR));
+        actionAbout->setText(QApplication::translate("MainWindow", "\345\205\263\344\272\216", Q_NULLPTR));
         actionSave_As->setText(QApplication::translate("MainWindow", "\345\217\246\345\255\230\344\270\272", Q_NULLPTR));
         actionCompileOutPut->setText(QApplication::translate("MainWindow", "\347\274\226\350\257\221\350\276\223\345\207\272", Q_NULLPTR));
         actionCompile->setText(QApplication::translate("MainWindow", "\347\274\226\350\257\221", Q_NULLPTR));
@@ -366,6 +374,7 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionAssemblyAppend->setShortcut(QApplication::translate("MainWindow", "Ctrl+F10", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
+        actionToolBar->setText(QApplication::translate("MainWindow", "\345\267\245\345\205\267\346\240\217", Q_NULLPTR));
         menu->setTitle(QApplication::translate("MainWindow", "\346\226\207\344\273\266 ", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("MainWindow", "\347\274\226\350\276\221 ", Q_NULLPTR));
         menu_4->setTitle(QApplication::translate("MainWindow", "\346\236\204\345\273\272 ", Q_NULLPTR));

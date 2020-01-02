@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
 
     // 设置文本编辑器为中心组件
     editor=new editorWidget(this);
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setCentralWidget(editor);
     isOpen=false;   // 当前文件是通过打开得到的
     isNew=false;    // 当前文件是通过新建得到的
@@ -365,6 +366,10 @@ void MainWindow::on_actionRedo_triggered(){
 
 // 仅当 菜单选择搜索 or ctrl+F之后
 void MainWindow::on_actionFind_triggered(){
+    if(!ui->mainToolBar->isVisible()){
+        ui->mainToolBar->setVisible(true);
+        ui->actionToolBar->setChecked(true);
+    }
     findEdit->setEnabled(true);
     findBtn->setEnabled(true);
     csBtn->setEnabled(true);
@@ -378,6 +383,11 @@ void MainWindow::on_actionFind_triggered(){
 
 // 仅当 菜单选择替换 or ctrl+R之后
 void MainWindow::on_actionReplace_triggered(){
+    if(!ui->mainToolBar->isVisible()){
+        ui->mainToolBar->setVisible(true);
+        ui->actionToolBar->setChecked(true);
+        replaceWidget->setVisible(false);       // 当工具栏隐藏时假设替换组件为关闭
+    }
     on_actionFind_triggered();
     if(replaceWidget->isVisible()){
         replaceWidget->setVisible(false);
@@ -422,10 +432,13 @@ void MainWindow::on_actionCompile_triggered(){
     }
 
     on_actionSave_triggered();  // 编译前自动保存
+
     ui->dockWidgetCompile->setVisible(true);
+    qDebug()<<"ing";
     ui->textEditCompileOutput->setReadOnly(true);
     ui->textEditCompileOutput->clear();
     ui->textEditCompileOutput->append("Compile file:"+lastFileName);
+    qDebug()<<"after";
 
     QString filename=lastFileName;
     QFile file(filename);
@@ -485,6 +498,12 @@ void MainWindow::on_actionAssemblyAppend_triggered(){
 
 void MainWindow::assembly(QString type){
 
+    // 对于非miniC程序进行提醒无法编译
+    if(lexCbBox->currentIndex()!=3){
+        QMessageBox::warning(this,tr("Warning"),tr("The file should be asm file!"));
+        return;
+    }
+
     on_actionSave_triggered();
     ui->dockWidgetAssembly->setVisible(true);
     ui->textEditAssemblyOutput->setReadOnly(true);
@@ -535,7 +554,7 @@ void MainWindow::assembly(QString type){
     return;
 }
 
-void MainWindow::on_actionAbout_seu_IDE_triggered(){
+void MainWindow::on_actionAbout_triggered(){
     about=new AboutDialog(this);
     about->setModal(true);
     about->show();

@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[27];
-    char stringdata0[611];
+    char stringdata0[603];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -51,13 +51,13 @@ QT_MOC_LITERAL(16, 368, 33), // "on_actionAssemblyOutPut_trigg..."
 QT_MOC_LITERAL(17, 402, 26), // "on_actionCompile_triggered"
 QT_MOC_LITERAL(18, 429, 30), // "on_actionAssemblyNew_triggered"
 QT_MOC_LITERAL(19, 460, 33), // "on_actionAssemblyAppend_trigg..."
-QT_MOC_LITERAL(20, 494, 32), // "on_actionAbout_seu_IDE_triggered"
-QT_MOC_LITERAL(21, 527, 10), // "select_lex"
-QT_MOC_LITERAL(22, 538, 17), // "find_text_changed"
-QT_MOC_LITERAL(23, 556, 11), // "set_find_cs"
-QT_MOC_LITERAL(24, 568, 11), // "set_find_hw"
-QT_MOC_LITERAL(25, 580, 13), // "show_find_str"
-QT_MOC_LITERAL(26, 594, 16) // "replace_find_str"
+QT_MOC_LITERAL(20, 494, 24), // "on_actionAbout_triggered"
+QT_MOC_LITERAL(21, 519, 10), // "select_lex"
+QT_MOC_LITERAL(22, 530, 17), // "find_text_changed"
+QT_MOC_LITERAL(23, 548, 11), // "set_find_cs"
+QT_MOC_LITERAL(24, 560, 11), // "set_find_hw"
+QT_MOC_LITERAL(25, 572, 13), // "show_find_str"
+QT_MOC_LITERAL(26, 586, 16) // "replace_find_str"
 
     },
     "MainWindow\0on_actionNew_triggered\0\0"
@@ -75,9 +75,9 @@ QT_MOC_LITERAL(26, 594, 16) // "replace_find_str"
     "on_actionCompile_triggered\0"
     "on_actionAssemblyNew_triggered\0"
     "on_actionAssemblyAppend_triggered\0"
-    "on_actionAbout_seu_IDE_triggered\0"
-    "select_lex\0find_text_changed\0set_find_cs\0"
-    "set_find_hw\0show_find_str\0replace_find_str"
+    "on_actionAbout_triggered\0select_lex\0"
+    "find_text_changed\0set_find_cs\0set_find_hw\0"
+    "show_find_str\0replace_find_str"
 };
 #undef QT_MOC_LITERAL
 
@@ -175,7 +175,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 15: _t->on_actionCompile_triggered(); break;
         case 16: _t->on_actionAssemblyNew_triggered(); break;
         case 17: _t->on_actionAssemblyAppend_triggered(); break;
-        case 18: _t->on_actionAbout_seu_IDE_triggered(); break;
+        case 18: _t->on_actionAbout_triggered(); break;
         case 19: _t->select_lex(); break;
         case 20: _t->find_text_changed(); break;
         case 21: _t->set_find_cs(); break;
