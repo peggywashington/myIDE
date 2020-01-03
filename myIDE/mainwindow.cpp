@@ -27,9 +27,10 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
 
     ui->setupUi(this);
 
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+
     // 设置文本编辑器为中心组件
     editor=new editorWidget(this);
-    this->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setCentralWidget(editor);
     isOpen=false;   // 当前文件是通过打开得到的
     isNew=false;    // 当前文件是通过新建得到的
@@ -37,9 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     // IDE刚打开时设置 某些按钮 和 文本编辑框 不可用
     actionActive(false);
     editor->geteditor()->setVisible(false);
-    // new查找框以及相关按钮
+    // 查找和替换模块
     searchWidget = new QWidget(this);
-    ui->mainToolBar->addWidget(searchWidget);
+    ui->toolBar->addWidget(searchWidget);
     QVBoxLayout* searchLayout = new QVBoxLayout(searchWidget);
     searchLayout->setMargin(0);
     searchLayout->setSpacing(0);
@@ -57,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     findBtn->setToolTip(tr("Search"));
     findBtn->setStyleSheet("QPushButton{""border-radius:1px}");
     findEdit = new QLineEdit(findWidget);     // 查找框
-    findEdit->setFont(QFont("Consolas", 11));
+    findEdit->setFont(QFont("Ariel", 11));
     findEdit->setMaximumWidth(200);
     findEdit->setMaximumHeight(35);
     findEdit->setStyleSheet("QLineEdit{""border-radius:5px}");
@@ -88,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     replaceBtn->setToolTip(tr("Search"));
     replaceBtn->setStyleSheet("QPushButton{""border-radius:1px}");
     replaceEdit = new QLineEdit(replaceWidget);     // 查找框
-    replaceEdit->setFont(QFont("Consolas", 11));
+    replaceEdit->setFont(QFont("Ariel", 11));
     replaceEdit->setMaximumWidth(200);
     replaceEdit->setMaximumHeight(35);
     replaceEdit->setStyleSheet("QLineEdit{""border-radius:5px}");
@@ -126,9 +127,9 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     connect(lexCbBox, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
 
     // 编译和汇编结果显示在tab形式的窗体
-    this->splitDockWidget(ui->dockWidgetCompile,ui->dockWidgetAssembly,Qt::Horizontal);
+    this->splitDockWidget(ui->dockWidgetCompile,ui->dockWidgetAssemble,Qt::Horizontal);
     ui->dockWidgetCompile->setVisible(false);
-    ui->dockWidgetAssembly->setVisible(false);
+    ui->dockWidgetAssemble->setVisible(false);
 
     // 底部状态栏显示当前打开文件路径
     statusLabel=new QLabel;
@@ -198,9 +199,9 @@ void MainWindow::on_actionOpen_triggered(){
     // 打开了文件
     else{
         // 设置文件类型对应的语法高亮
-        if(fileName.endsWith(".txt")) {editor->setLexer(0);lexCbBox->setCurrentIndex(0);}
-        else if(fileName.endsWith(".cpp")||fileName.endsWith(".h")) {editor->setLexer(1);lexCbBox->setCurrentIndex(1);}
-        else if(fileName.endsWith(".asm")) {editor->setLexer(3);lexCbBox->setCurrentIndex(3);}
+        if(fileName.endsWith(".txt")) {editor->setHl(0);lexCbBox->setCurrentIndex(0);}
+        else if(fileName.endsWith(".cpp")||fileName.endsWith(".h")) {editor->setHl(1);lexCbBox->setCurrentIndex(1);}
+        else if(fileName.endsWith(".asm")) {editor->setHl(3);lexCbBox->setCurrentIndex(3);}
 
         QFile file(fileName);
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
@@ -215,7 +216,7 @@ void MainWindow::on_actionOpen_triggered(){
                 editor->geteditor()->clear();
                 editor->geteditor()->setVisible(true);
                 ui->textEditCompileOutput->clear();
-                ui->textEditAssemblyOutput->clear();
+                ui->textEditAssembleOutput->clear();
 
                 actionActive(true);
 
@@ -235,25 +236,26 @@ void MainWindow::on_actionOpen_triggered(){
     }
 }
 
-void MainWindow::on_actionSave_triggered(){
+bool MainWindow::on_actionSave_triggered(){
 
     // 若为本次新建的文件
     if(isNew){
         // 文件为空不可保存
-        if(editor->geteditor()->text() == "")
+        if(editor->geteditor()->text() == ""){
             QMessageBox::warning(this,tr("Warning"),tr("Empty file!"),QMessageBox::Ok);
+            return false; // 空文件未保存情况
+        }
         else{
             QFileDialog fileDialog;
             QString str = fileDialog.getSaveFileName(this,tr("Save"),"/Untitled",
             tr("Text File(*.txt);;Cpp(*.cpp);;Cpp(*.h);;MiniC(*.cpp);;ASM(*.asm);;All (*.*)"),
             &selectedlanguage);
 
-            if(str == "") return;
+            if(str == "") return false;
             QFile file(str);
-
             if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
                 QMessageBox::warning(this,tr("Warning"),tr("Open failed!"),QMessageBox::Ok);
-                return;
+                return false;
             }
             else{
                 QTextStream textStream(&file);
@@ -269,6 +271,7 @@ void MainWindow::on_actionSave_triggered(){
                 editor->geteditor()->setModified(false);    // 保存后置为未修改
 
                 QMessageBox::information(this,"Save","Successfully saved!",QMessageBox::Ok);
+                return true;
             }
 
         }
@@ -279,7 +282,7 @@ void MainWindow::on_actionSave_triggered(){
             QFile file(lastFileName);
             if(!file.open(QIODevice::WriteOnly | QIODevice::Text)){
                 QMessageBox::warning(this,tr("Warning"),tr("Write failed!"));
-                return;
+                return false;
             }
             else{
                 QTextStream textStream(&file);
@@ -290,11 +293,12 @@ void MainWindow::on_actionSave_triggered(){
                 editor->geteditor()->setModified(false);    // 保存后置为未修改
 
                 QMessageBox::information(this,"Save","Successfully saved!",QMessageBox::Ok);
+                return true;
             }
         }
         else{
             QMessageBox::warning(this,tr("Warning"),tr("Please new or open a file!"));
-            return;
+            return false;
         }
     }
 }
@@ -308,7 +312,7 @@ void MainWindow::on_actionSave_As_triggered(){
     }
 
     QFileDialog fileDialog;
-    QString fileName = fileDialog.getSaveFileName(this,tr("Save as"),"/Untitled",
+    QString fileName = fileDialog.getSaveFileName(this,tr("Save as"),statusLabel->text(),
                        tr("Text File(*.txt);;Cpp(*.cpp);;Cpp(*.h);;MiniC(*.cpp);;ASM(*.asm);;All (*.*)"),
                        &selectedlanguage);
     if(fileName == "")
@@ -366,8 +370,8 @@ void MainWindow::on_actionRedo_triggered(){
 
 // 仅当 菜单选择搜索 or ctrl+F之后
 void MainWindow::on_actionFind_triggered(){
-    if(!ui->mainToolBar->isVisible()){
-        ui->mainToolBar->setVisible(true);
+    if(!ui->toolBar->isVisible()){
+        ui->toolBar->setVisible(true);
         ui->actionToolBar->setChecked(true);
     }
     findEdit->setEnabled(true);
@@ -383,8 +387,8 @@ void MainWindow::on_actionFind_triggered(){
 
 // 仅当 菜单选择替换 or ctrl+R之后
 void MainWindow::on_actionReplace_triggered(){
-    if(!ui->mainToolBar->isVisible()){
-        ui->mainToolBar->setVisible(true);
+    if(!ui->toolBar->isVisible()){
+        ui->toolBar->setVisible(true);
         ui->actionToolBar->setChecked(true);
         replaceWidget->setVisible(false);       // 当工具栏隐藏时假设替换组件为关闭
     }
@@ -403,23 +407,6 @@ void MainWindow::on_actionReplace_triggered(){
     }
 }
 
-void MainWindow::on_actionCompileOutPut_triggered(){
-    if(ui->dockWidgetCompile->isVisible()){
-        ui->dockWidgetCompile->setVisible(false);
-        ui->actionCompile->setChecked(false);
-    }
-    else{
-        ui->dockWidgetCompile->setVisible(true);
-        ui->actionCompile->setChecked(true);
-    }
-}
-
-void MainWindow::on_actionAssemblyOutPut_triggered(){
-    if(ui->dockWidgetAssembly->isVisible())
-        ui->dockWidgetAssembly->setVisible(false);
-    else ui->dockWidgetAssembly->setVisible(true);
-}
-
 void MainWindow::on_actionCompile_triggered(){
 
     // 对于非miniC程序进行提醒无法编译
@@ -431,72 +418,78 @@ void MainWindow::on_actionCompile_triggered(){
         return;
     }
 
-    on_actionSave_triggered();  // 编译前自动保存
+    if(on_actionSave_triggered()){
 
-    ui->dockWidgetCompile->setVisible(true);
-    qDebug()<<"ing";
-    ui->textEditCompileOutput->setReadOnly(true);
-    ui->textEditCompileOutput->clear();
-    ui->textEditCompileOutput->append("Compile file:"+lastFileName);
-    qDebug()<<"after";
+        ui->dockWidgetCompile->setVisible(true);
+        qDebug()<<"ing";
+        ui->textEditCompileOutput->setReadOnly(true);
+        ui->textEditCompileOutput->clear();
+        ui->textEditCompileOutput->append("Compile file:"+lastFileName);
+        qDebug()<<"after";
 
-    QString filename=lastFileName;
-    QFile file(filename);
+        QString filename=lastFileName;
+        QFile file(filename);
 
-    if (!file.open (QIODevice::ReadOnly)){
-        QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));
-        return;
-    }
-
-    // 获取当前执行目录
-    QString path;
-    QDir dir;
-    path = dir.currentPath();
-
-    // 编译前清空输出文件
-    QFile output(path + "/cerror.txt");
-    output.remove();
-
-    // 编译器路径
-    QString programName = path + "/exe/MinicComplier.exe";
-    QString filePath = file.fileName();
-    QStringList arguments;
-    arguments<<filePath;
-
-    // 调用编译器
-    QProcess *dProcess = new QProcess(this);
-    dProcess->start(programName, arguments);    // 使用外部编译器编译本文件
-    dProcess->closeWriteChannel();
-
-    // wait
-    while(true==dProcess->waitForFinished()){
-        // 将执行结果显示在下方compiler文本框中
-        QString outPath = path + "/cerror.txt";
-
-        QFile file(outPath);
-
-        if (file.open (QIODevice::ReadOnly | QIODevice::Text)){
-            QByteArray all = file.readAll();
-            QTextCodec *codec = QTextCodec::codecForName("GBK");
-            QString ReadyText = codec->toUnicode(all);
-            ui->textEditCompileOutput->append(ReadyText);
+        if (!file.open (QIODevice::ReadOnly)){
+            QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));
+            return;
         }
+
+        // 获取当前执行目录
+        QString path;
+        QDir dir;
+        path = dir.currentPath();
+
+        // 编译前清空输出文件
+        QFile output(path + "/cerror.txt");
+        output.remove();
+
+        // 编译器路径
+        QString programName = path + "/exe/compiler.exe";
+        QString filePath = file.fileName();
+        QStringList arguments;
+        arguments<<filePath;
+
+        // 调用编译器
+        QProcess *dProcess = new QProcess(this);
+        dProcess->start(programName, arguments);    // 使用外部编译器编译本文件
+        dProcess->closeWriteChannel();
+
+        // wait
+        while(true==dProcess->waitForFinished()){
+            // 将执行结果显示在下方compiler文本框中
+            QString outPath = path + "/cerror.txt";
+
+            QFile file(outPath);
+
+            if (file.open (QIODevice::ReadOnly | QIODevice::Text)){
+                QByteArray all = file.readAll();
+                QTextCodec *codec = QTextCodec::codecForName("GBK");
+                QString ReadyText = codec->toUnicode(all);
+                ui->textEditCompileOutput->append(ReadyText);
+            }
+            return;
+        }
+
+        ui->textEditCompileOutput->append("Process failed to start, please check!");
+        return;
+    }else{
+        QMessageBox::warning(this,tr("Warning"),tr("The file can only be compiled after being saved!"));
         return;
     }
 
-    ui->textEditCompileOutput->append("Process failed to start, please check!");
-    return;
+
 }
 
-void MainWindow::on_actionAssemblyNew_triggered(){
-    assembly("new");
+void MainWindow::on_actionAssembleNew_triggered(){
+    assemble("new");
 }
 
-void MainWindow::on_actionAssemblyAppend_triggered(){
-    assembly("append");
+void MainWindow::on_actionAssembleAppend_triggered(){
+    assemble("append");
 }
 
-void MainWindow::assembly(QString type){
+void MainWindow::assemble(QString type){
 
     // 对于非miniC程序进行提醒无法编译
     if(lexCbBox->currentIndex()!=3){
@@ -505,10 +498,10 @@ void MainWindow::assembly(QString type){
     }
 
     on_actionSave_triggered();
-    ui->dockWidgetAssembly->setVisible(true);
-    ui->textEditAssemblyOutput->setReadOnly(true);
-    ui->textEditAssemblyOutput->clear();
-    ui->textEditAssemblyOutput->append("Assembly file:"+lastFileName);
+    ui->dockWidgetAssemble->setVisible(true);
+    ui->textEditAssembleOutput->setReadOnly(true);
+    ui->textEditAssembleOutput->clear();
+    ui->textEditAssembleOutput->append("Assemble file:"+lastFileName);
 
     QString filename=lastFileName;
     QFile file(filename);
@@ -545,12 +538,12 @@ void MainWindow::assembly(QString type){
             QByteArray all = file.readAll();
             QTextCodec *codec = QTextCodec::codecForName("GBK");
             QString ReadyText = codec->toUnicode(all);
-            ui->textEditAssemblyOutput->append(ReadyText);
+            ui->textEditAssembleOutput->append(ReadyText);
         }
         return;
     }
 
-    ui->textEditAssemblyOutput->append("Process failed to start, please check!");
+    ui->textEditAssembleOutput->append("Process failed to start, please check!");
     return;
 }
 
@@ -575,11 +568,11 @@ void MainWindow::actionActive(bool act){
     ui->actionReplace->setEnabled(act);
 
     ui->actionCompile->setEnabled(act);
-    ui->menuAssembly->setEnabled(act);
-    ui->actionAssemblyNew->setEnabled(act);
-    ui->actionAssemblyAppend->setEnabled(act);
+    ui->menuAssemble->setEnabled(act);
+    ui->actionAssembleNew->setEnabled(act);
+    ui->actionAssembleAppend->setEnabled(act);
     ui->actionCompileOutPut->setEnabled(act);
-    ui->actionAssemblyOutPut->setEnabled(act);
+    ui->actionAssembleOutPut->setEnabled(act);
 }
 
 // 如果查找框内容改变就触发
@@ -652,5 +645,5 @@ void MainWindow::replace_find_str(){
 // 选择语法
 void MainWindow::select_lex(){
     int type=lexCbBox->currentIndex();
-    selectedlanguage = editor->setLexer(type);  // 接收当前类型
+    selectedlanguage = editor->setHl(type);  // 接收当前类型
 }

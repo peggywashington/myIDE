@@ -45,29 +45,29 @@ public:
     QAction *actionSave_As;
     QAction *actionCompileOutPut;
     QAction *actionCompile;
-    QAction *actionAssemblyOutPut;
-    QAction *actionAssemblyNew;
-    QAction *actionAssemblyAppend;
+    QAction *actionAssembleOutPut;
+    QAction *actionAssembleNew;
+    QAction *actionAssembleAppend;
     QAction *actionToolBar;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMenuBar *menuBar;
-    QMenu *menu;
+    QMenu *menu_1;
     QMenu *menu_2;
     QMenu *menu_4;
-    QMenu *menuAssembly;
+    QMenu *menuAssemble;
     QMenu *menu_5;
     QMenu *menu_3;
-    QToolBar *mainToolBar;
+    QToolBar *toolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidgetCompile;
     QWidget *widgetCompileContents;
     QGridLayout *gridLayout_4;
     QTextEdit *textEditCompileOutput;
-    QDockWidget *dockWidgetAssembly;
-    QWidget *widgetAssemblyContents;
+    QDockWidget *dockWidgetAssemble;
+    QWidget *widgetAssembleContents;
     QGridLayout *gridLayout_2;
-    QTextEdit *textEditAssemblyOutput;
+    QTextEdit *textEditAssembleOutput;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -147,14 +147,14 @@ public:
         actionCompileOutPut->setCheckable(true);
         actionCompile = new QAction(MainWindow);
         actionCompile->setObjectName(QStringLiteral("actionCompile"));
-        actionAssemblyOutPut = new QAction(MainWindow);
-        actionAssemblyOutPut->setObjectName(QStringLiteral("actionAssemblyOutPut"));
-        actionAssemblyOutPut->setCheckable(true);
-        actionAssemblyOutPut->setChecked(false);
-        actionAssemblyNew = new QAction(MainWindow);
-        actionAssemblyNew->setObjectName(QStringLiteral("actionAssemblyNew"));
-        actionAssemblyAppend = new QAction(MainWindow);
-        actionAssemblyAppend->setObjectName(QStringLiteral("actionAssemblyAppend"));
+        actionAssembleOutPut = new QAction(MainWindow);
+        actionAssembleOutPut->setObjectName(QStringLiteral("actionAssembleOutPut"));
+        actionAssembleOutPut->setCheckable(true);
+        actionAssembleOutPut->setChecked(false);
+        actionAssembleNew = new QAction(MainWindow);
+        actionAssembleNew->setObjectName(QStringLiteral("actionAssembleNew"));
+        actionAssembleAppend = new QAction(MainWindow);
+        actionAssembleAppend->setObjectName(QStringLiteral("actionAssembleAppend"));
         actionToolBar = new QAction(MainWindow);
         actionToolBar->setObjectName(QStringLiteral("actionToolBar"));
         actionToolBar->setCheckable(true);
@@ -169,33 +169,33 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1300, 26));
-        menu = new QMenu(menuBar);
-        menu->setObjectName(QStringLiteral("menu"));
+        menu_1 = new QMenu(menuBar);
+        menu_1->setObjectName(QStringLiteral("menu_1"));
         menu_2 = new QMenu(menuBar);
         menu_2->setObjectName(QStringLiteral("menu_2"));
         menu_4 = new QMenu(menuBar);
         menu_4->setObjectName(QStringLiteral("menu_4"));
-        menuAssembly = new QMenu(menu_4);
-        menuAssembly->setObjectName(QStringLiteral("menuAssembly"));
+        menuAssemble = new QMenu(menu_4);
+        menuAssemble->setObjectName(QStringLiteral("menuAssemble"));
         menu_5 = new QMenu(menuBar);
         menu_5->setObjectName(QStringLiteral("menu_5"));
         menu_3 = new QMenu(menuBar);
         menu_3->setObjectName(QStringLiteral("menu_3"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
+        toolBar = new QToolBar(MainWindow);
+        toolBar->setObjectName(QStringLiteral("toolBar"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
-        mainToolBar->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(toolBar->sizePolicy().hasHeightForWidth());
+        toolBar->setSizePolicy(sizePolicy);
         QFont font;
         font.setFamily(QStringLiteral("Agency FB"));
         font.setPointSize(9);
-        mainToolBar->setFont(font);
-        mainToolBar->setMovable(false);
-        mainToolBar->setIconSize(QSize(25, 25));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        toolBar->setFont(font);
+        toolBar->setMovable(false);
+        toolBar->setIconSize(QSize(25, 25));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -225,48 +225,48 @@ public:
 
         dockWidgetCompile->setWidget(widgetCompileContents);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidgetCompile);
-        dockWidgetAssembly = new QDockWidget(MainWindow);
-        dockWidgetAssembly->setObjectName(QStringLiteral("dockWidgetAssembly"));
+        dockWidgetAssemble = new QDockWidget(MainWindow);
+        dockWidgetAssemble->setObjectName(QStringLiteral("dockWidgetAssemble"));
         QFont font2;
         font2.setFamily(QStringLiteral("Consolas"));
         font2.setPointSize(10);
-        dockWidgetAssembly->setFont(font2);
-        dockWidgetAssembly->setFloating(false);
-        dockWidgetAssembly->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
-        widgetAssemblyContents = new QWidget();
-        widgetAssemblyContents->setObjectName(QStringLiteral("widgetAssemblyContents"));
-        gridLayout_2 = new QGridLayout(widgetAssemblyContents);
+        dockWidgetAssemble->setFont(font2);
+        dockWidgetAssemble->setFloating(false);
+        dockWidgetAssemble->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
+        widgetAssembleContents = new QWidget();
+        widgetAssembleContents->setObjectName(QStringLiteral("widgetAssembleContents"));
+        gridLayout_2 = new QGridLayout(widgetAssembleContents);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        textEditAssemblyOutput = new QTextEdit(widgetAssemblyContents);
-        textEditAssemblyOutput->setObjectName(QStringLiteral("textEditAssemblyOutput"));
+        textEditAssembleOutput = new QTextEdit(widgetAssembleContents);
+        textEditAssembleOutput->setObjectName(QStringLiteral("textEditAssembleOutput"));
         QFont font3;
         font3.setFamily(QStringLiteral("Consolas"));
         font3.setPointSize(10);
         font3.setBold(false);
         font3.setWeight(50);
-        textEditAssemblyOutput->setFont(font3);
-        textEditAssemblyOutput->setUndoRedoEnabled(false);
-        textEditAssemblyOutput->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
+        textEditAssembleOutput->setFont(font3);
+        textEditAssembleOutput->setUndoRedoEnabled(false);
+        textEditAssembleOutput->setTextInteractionFlags(Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
-        gridLayout_2->addWidget(textEditAssemblyOutput, 0, 0, 1, 1);
+        gridLayout_2->addWidget(textEditAssembleOutput, 0, 0, 1, 1);
 
-        dockWidgetAssembly->setWidget(widgetAssemblyContents);
-        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidgetAssembly);
+        dockWidgetAssemble->setWidget(widgetAssembleContents);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidgetAssemble);
 
-        menuBar->addAction(menu->menuAction());
+        menuBar->addAction(menu_1->menuAction());
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_3->menuAction());
         menuBar->addAction(menu_4->menuAction());
         menuBar->addAction(menu_5->menuAction());
-        menu->addAction(actionNew);
-        menu->addAction(actionOpen);
-        menu->addSeparator();
-        menu->addAction(actionSave);
-        menu->addAction(actionSave_As);
-        menu->addSeparator();
-        menu->addAction(actionExit);
+        menu_1->addAction(actionNew);
+        menu_1->addAction(actionOpen);
+        menu_1->addSeparator();
+        menu_1->addAction(actionSave);
+        menu_1->addAction(actionSave_As);
+        menu_1->addSeparator();
+        menu_1->addAction(actionExit);
         menu_2->addAction(actionUndo);
         menu_2->addAction(actionRedo);
         menu_2->addSeparator();
@@ -279,30 +279,32 @@ public:
         menu_2->addAction(actionFind);
         menu_2->addAction(actionReplace);
         menu_4->addAction(actionCompile);
-        menu_4->addAction(menuAssembly->menuAction());
-        menuAssembly->addAction(actionAssemblyNew);
-        menuAssembly->addAction(actionAssemblyAppend);
+        menu_4->addAction(menuAssemble->menuAction());
+        menuAssemble->addAction(actionAssembleNew);
+        menuAssemble->addAction(actionAssembleAppend);
         menu_5->addAction(actionAbout);
         menu_3->addAction(actionToolBar);
         menu_3->addSeparator();
         menu_3->addAction(actionCompileOutPut);
-        menu_3->addAction(actionAssemblyOutPut);
-        mainToolBar->addAction(actionNew);
-        mainToolBar->addAction(actionOpen);
-        mainToolBar->addAction(actionSave);
-        mainToolBar->addSeparator();
-        mainToolBar->addAction(actionCut);
-        mainToolBar->addAction(actionCopy);
-        mainToolBar->addAction(actionPaste);
-        mainToolBar->addSeparator();
-        mainToolBar->addAction(actionUndo);
-        mainToolBar->addAction(actionRedo);
-        mainToolBar->addSeparator();
+        menu_3->addAction(actionAssembleOutPut);
+        toolBar->addAction(actionNew);
+        toolBar->addAction(actionOpen);
+        toolBar->addAction(actionSave);
+        toolBar->addSeparator();
+        toolBar->addAction(actionCut);
+        toolBar->addAction(actionCopy);
+        toolBar->addAction(actionPaste);
+        toolBar->addSeparator();
+        toolBar->addAction(actionUndo);
+        toolBar->addAction(actionRedo);
+        toolBar->addSeparator();
 
         retranslateUi(MainWindow);
         QObject::connect(dockWidgetCompile, SIGNAL(visibilityChanged(bool)), actionCompileOutPut, SLOT(setChecked(bool)));
-        QObject::connect(dockWidgetAssembly, SIGNAL(visibilityChanged(bool)), actionAssemblyOutPut, SLOT(setChecked(bool)));
-        QObject::connect(actionToolBar, SIGNAL(toggled(bool)), mainToolBar, SLOT(setVisible(bool)));
+        QObject::connect(dockWidgetAssemble, SIGNAL(visibilityChanged(bool)), actionAssembleOutPut, SLOT(setChecked(bool)));
+        QObject::connect(actionToolBar, SIGNAL(toggled(bool)), toolBar, SLOT(setVisible(bool)));
+        QObject::connect(actionCompileOutPut, SIGNAL(toggled(bool)), dockWidgetCompile, SLOT(setVisible(bool)));
+        QObject::connect(actionAssembleOutPut, SIGNAL(toggled(bool)), dockWidgetAssemble, SLOT(setVisible(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -365,27 +367,27 @@ public:
 #ifndef QT_NO_SHORTCUT
         actionCompile->setShortcut(QApplication::translate("MainWindow", "Ctrl+F5", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAssemblyOutPut->setText(QApplication::translate("MainWindow", "\346\261\207\347\274\226\350\276\223\345\207\272", Q_NULLPTR));
-        actionAssemblyNew->setText(QApplication::translate("MainWindow", "\345\206\231\345\205\245\345\210\260\346\226\260\346\226\207\344\273\266  ", Q_NULLPTR));
+        actionAssembleOutPut->setText(QApplication::translate("MainWindow", "\346\261\207\347\274\226\350\276\223\345\207\272", Q_NULLPTR));
+        actionAssembleNew->setText(QApplication::translate("MainWindow", "\345\206\231\345\205\245\345\210\260\346\226\260\346\226\207\344\273\266  ", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        actionAssemblyNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+F9", Q_NULLPTR));
+        actionAssembleNew->setShortcut(QApplication::translate("MainWindow", "Ctrl+F9", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        actionAssemblyAppend->setText(QApplication::translate("MainWindow", "\350\277\275\345\212\240\345\210\260\346\227\247\346\226\207\344\273\266", Q_NULLPTR));
+        actionAssembleAppend->setText(QApplication::translate("MainWindow", "\350\277\275\345\212\240\345\210\260\346\227\247\346\226\207\344\273\266", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        actionAssemblyAppend->setShortcut(QApplication::translate("MainWindow", "Ctrl+F10", Q_NULLPTR));
+        actionAssembleAppend->setShortcut(QApplication::translate("MainWindow", "Ctrl+F10", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
         actionToolBar->setText(QApplication::translate("MainWindow", "\345\267\245\345\205\267\346\240\217", Q_NULLPTR));
-        menu->setTitle(QApplication::translate("MainWindow", "\346\226\207\344\273\266 ", Q_NULLPTR));
+        menu_1->setTitle(QApplication::translate("MainWindow", "\346\226\207\344\273\266 ", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("MainWindow", "\347\274\226\350\276\221 ", Q_NULLPTR));
         menu_4->setTitle(QApplication::translate("MainWindow", "\346\236\204\345\273\272 ", Q_NULLPTR));
-        menuAssembly->setTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226", Q_NULLPTR));
+        menuAssemble->setTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226", Q_NULLPTR));
         menu_5->setTitle(QApplication::translate("MainWindow", "\345\270\256\345\212\251 ", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("MainWindow", "\350\247\206\345\233\276 ", Q_NULLPTR));
 #ifndef QT_NO_ACCESSIBILITY
         dockWidgetCompile->setAccessibleName(QString());
 #endif // QT_NO_ACCESSIBILITY
         dockWidgetCompile->setWindowTitle(QApplication::translate("MainWindow", "\347\274\226\350\257\221\350\276\223\345\207\272", Q_NULLPTR));
-        dockWidgetAssembly->setWindowTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226\350\276\223\345\207\272", Q_NULLPTR));
+        dockWidgetAssemble->setWindowTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226\350\276\223\345\207\272", Q_NULLPTR));
     } // retranslateUi
 
 };

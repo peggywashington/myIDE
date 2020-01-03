@@ -31,14 +31,14 @@ public:
 
     void actionActive(bool act);                // 按钮激活函数
 
-    void assembly(QString type);    // 汇编,参数为类型(New or Append)
+    void assemble(QString type);    // 汇编,参数为类型(New or Append)
 
 private slots:  // 槽函数
 
     // menu-file
     void on_actionNew_triggered();      // 新建文件
     void on_actionOpen_triggered();     // 打开文件
-    void on_actionSave_triggered();     // 保存文件
+    bool on_actionSave_triggered();     // 保存文件
     void on_actionSave_As_triggered();  // 另存为
     void on_actionExit_triggered();     // 退出程序
 
@@ -52,14 +52,10 @@ private slots:  // 槽函数
     void on_actionFind_triggered();         // 查找
     void on_actionReplace_triggered();      // 替换
 
-    // menu-view
-    void on_actionCompileOutPut_triggered();    // 开关编译结果框
-    void on_actionAssemblyOutPut_triggered();   // 开关汇编结果框
-
     // menu-build
     void on_actionCompile_triggered();          // 编译
-    void on_actionAssemblyNew_triggered();      // 汇编-产生新文件写入内容
-    void on_actionAssemblyAppend_triggered();   // 汇编-在旧文件中追加内容  TODO:估计这个不用了
+    void on_actionAssembleNew_triggered();      // 汇编-产生新文件写入内容
+    void on_actionAssembleAppend_triggered();   // 汇编-在旧文件中追加内容  TODO:估计这个不用了
 
     // menu-help
     void on_actionAbout_triggered();

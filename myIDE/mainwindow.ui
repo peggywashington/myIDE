@@ -32,7 +32,7 @@
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu">
+   <widget class="QMenu" name="menu_1">
     <property name="title">
      <string>文件 </string>
     </property>
@@ -64,15 +64,15 @@
     <property name="title">
      <string>构建 </string>
     </property>
-    <widget class="QMenu" name="menuAssembly">
+    <widget class="QMenu" name="menuAssemble">
      <property name="title">
       <string>汇编</string>
      </property>
-     <addaction name="actionAssemblyNew"/>
-     <addaction name="actionAssemblyAppend"/>
+     <addaction name="actionAssembleNew"/>
+     <addaction name="actionAssembleAppend"/>
     </widget>
     <addaction name="actionCompile"/>
-    <addaction name="menuAssembly"/>
+    <addaction name="menuAssemble"/>
    </widget>
    <widget class="QMenu" name="menu_5">
     <property name="title">
@@ -87,15 +87,15 @@
     <addaction name="actionToolBar"/>
     <addaction name="separator"/>
     <addaction name="actionCompileOutPut"/>
-    <addaction name="actionAssemblyOutPut"/>
+    <addaction name="actionAssembleOutPut"/>
    </widget>
-   <addaction name="menu"/>
+   <addaction name="menu_1"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="toolBar">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
      <horstretch>0</horstretch>
@@ -182,7 +182,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidgetAssembly">
+  <widget class="QDockWidget" name="dockWidgetAssemble">
    <property name="font">
     <font>
      <family>Consolas</family>
@@ -201,10 +201,10 @@
    <attribute name="dockWidgetArea">
     <number>8</number>
    </attribute>
-   <widget class="QWidget" name="widgetAssemblyContents">
+   <widget class="QWidget" name="widgetAssembleContents">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <widget class="QTextEdit" name="textEditAssemblyOutput">
+      <widget class="QTextEdit" name="textEditAssembleOutput">
        <property name="font">
         <font>
          <family>Consolas</family>
@@ -394,7 +394,7 @@
     <string>Ctrl+F5</string>
    </property>
   </action>
-  <action name="actionAssemblyOutPut">
+  <action name="actionAssembleOutPut">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -405,7 +405,7 @@
     <string>汇编输出</string>
    </property>
   </action>
-  <action name="actionAssemblyNew">
+  <action name="actionAssembleNew">
    <property name="text">
     <string>写入到新文件  </string>
    </property>
@@ -413,7 +413,7 @@
     <string>Ctrl+F9</string>
    </property>
   </action>
-  <action name="actionAssemblyAppend">
+  <action name="actionAssembleAppend">
    <property name="text">
     <string>追加到旧文件</string>
    </property>
@@ -455,9 +455,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>dockWidgetAssembly</sender>
+   <sender>dockWidgetAssemble</sender>
    <signal>visibilityChanged(bool)</signal>
-   <receiver>actionAssemblyOutPut</receiver>
+   <receiver>actionAssembleOutPut</receiver>
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -473,7 +473,7 @@
   <connection>
    <sender>actionToolBar</sender>
    <signal>toggled(bool)</signal>
-   <receiver>mainToolBar</receiver>
+   <receiver>toolBar</receiver>
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -483,6 +483,38 @@
     <hint type="destinationlabel">
      <x>649</x>
      <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCompileOutPut</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dockWidgetCompile</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>702</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAssembleOutPut</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dockWidgetAssemble</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>975</x>
+     <y>702</y>
     </hint>
    </hints>
   </connection>

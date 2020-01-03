@@ -14,9 +14,7 @@ editorWidget::editorWidget(QWidget *parent): QWidget(parent)
     editor->setMarginType(0,QsciScintilla::NumberMargin);//设置编号为0的页边显示行号。
     editor->setMarginLineNumbers(0,true);//对该页边启用行号
     editor->setMarginWidth(0,40);//设置页边宽度
-
-    editor->setFont(QFont("Consolas", 12));//设置默认字体显示
-
+    editor->setFont(QFont("Ariel", 12));//设置默认字体显示
 
     //界面
     QVBoxLayout *pLayout = new QVBoxLayout(this);
@@ -50,7 +48,7 @@ editorWidget::editorWidget(QWidget *parent): QWidget(parent)
 
 }
 
-QString editorWidget::setLexer(const int type)
+QString editorWidget::setHl(const int type)
 {
     QsciLexer *lexer;
     QsciAPIs *apis;
@@ -67,11 +65,11 @@ QString editorWidget::setLexer(const int type)
         selectedLanguage = "Cpp(*.cpp)";
         break;
     case 2:
-        lexer=new QsciLexerCPP;//1-c++
+        lexer=new QsciLexerCPP;//2-MiniC
         selectedLanguage = "MiniC(*.cpp)";
         break;
     case 3:
-        lexer = new QsciLexerCPP;//2-asm
+        lexer = new QsciLexerCPP;//3-asm
         selectedLanguage = "ASM(*.asm)";
         break;
     default:
@@ -89,7 +87,7 @@ QString editorWidget::setLexer(const int type)
     else
     {
         editor->setLexer(0);//给QsciScintilla设置词法分析器
-        editor->setFont(QFont("Consolas", 12));//设置默认字体显示
+        editor->setFont(QFont("Ariel", 12));//设置默认字体显示
     }
     return selectedLanguage;
 }

@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(codec);
 
     QApplication a(argc, argv);
+
     MainWindow w;
     w.setWindowTitle("myIDE");
-
     w.show();
-    //qDebug()<<"wtf"<<endl;
+
     return a.exec();
 }
