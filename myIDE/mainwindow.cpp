@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include<aboutdialog.h>
 
 #include<iostream>
 #include<QTextEdit>
@@ -18,7 +19,7 @@
 #include<windows.h>
 #include<QPushButton>
 #include<QIcon>
-#include<aboutdialog.h>
+#include<QShortcut>
 #include<qDebug>
 #include<iostream>
 using namespace std;
@@ -26,17 +27,6 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWindow){
 
     ui->setupUi(this);
-
-    // 主题
-//    this->setAutoFillBackground(true);
-//    QPalette palette;
-//    palette.setColor(QPalette::Background, QColor(192,253,123));
-//    this->setPalette(palette);
-    setWindowFlags(Qt::FramelessWindowHint);
-    installEventFilter(ui->customTitle);
-
-
-
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // 设置文本编辑器为中心组件
@@ -135,6 +125,8 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
     connect(replaceBtn,SIGNAL(clicked(bool)),this,SLOT(replace_find_str()));
     connect(replaceEdit, SIGNAL(returnPressed()), replaceBtn, SIGNAL(clicked()), Qt::UniqueConnection);   //光标在替换框时查找按钮和回车等效
     connect(lexCbBox, SIGNAL(currentIndexChanged(int)),this,SLOT(select_lex()));
+    QShortcut *annotation= new QShortcut(QKeySequence(tr("ctrl+q")), this);
+    connect(annotation, SIGNAL(activated()), this,SLOT(annotate()));
 
     // 编译和汇编结果显示在tab形式的窗体
     this->splitDockWidget(ui->dockWidgetCompile,ui->dockWidgetAssemble,Qt::Horizontal);
@@ -384,15 +376,27 @@ void MainWindow::on_actionFind_triggered(){
         ui->toolBar->setVisible(true);
         ui->actionToolBar->setChecked(true);
     }
-    findEdit->setEnabled(true);
-    findBtn->setEnabled(true);
-    csBtn->setEnabled(true);
-    hwBtn->setEnabled(true);
 
-    findBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
-    csBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
-    hwBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
-    findEdit->setFocus();
+    if(findEdit->isEnabled()){
+        findEdit->clear();
+        editor->geteditor()->copy();
+        findEdit->paste();
+        findEdit->setFocus();
+    }
+    else{
+        findEdit->setEnabled(true);
+        findBtn->setEnabled(true);
+        csBtn->setEnabled(true);
+        hwBtn->setEnabled(true);
+
+        findBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
+        csBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
+        hwBtn->setStyleSheet("QPushButton{""background-color:rgb(255,255,255);""border-radius:1px}");
+        editor->geteditor()->copy();
+        findEdit->paste();
+        findEdit->setFocus();
+    }
+
 }
 
 // 仅当 菜单选择替换 or ctrl+R之后
@@ -431,11 +435,9 @@ void MainWindow::on_actionCompile_triggered(){
     if(on_actionSave_triggered()){
 
         ui->dockWidgetCompile->setVisible(true);
-        qDebug()<<"ing";
         ui->textEditCompileOutput->setReadOnly(true);
         ui->textEditCompileOutput->clear();
         ui->textEditCompileOutput->append("Compile file:"+lastFileName);
-        qDebug()<<"after";
 
         QString filename=lastFileName;
         QFile file(filename);
@@ -483,7 +485,8 @@ void MainWindow::on_actionCompile_triggered(){
 
         ui->textEditCompileOutput->append("Process failed to start, please check!");
         return;
-    }else{
+    }
+    else{
         QMessageBox::warning(this,tr("Warning"),tr("The file can only be compiled after being saved!"));
         return;
     }
@@ -491,15 +494,7 @@ void MainWindow::on_actionCompile_triggered(){
 
 }
 
-void MainWindow::on_actionAssembleNew_triggered(){
-    assemble("new");
-}
-
-void MainWindow::on_actionAssembleAppend_triggered(){
-    assemble("append");
-}
-
-void MainWindow::assemble(QString type){
+void MainWindow::on_actionAssemble_triggered(){
 
     // 对于非miniC程序进行提醒无法编译
     if(lexCbBox->currentIndex()!=3){
@@ -507,54 +502,59 @@ void MainWindow::assemble(QString type){
         return;
     }
 
-    on_actionSave_triggered();
-    ui->dockWidgetAssemble->setVisible(true);
-    ui->textEditAssembleOutput->setReadOnly(true);
-    ui->textEditAssembleOutput->clear();
-    ui->textEditAssembleOutput->append("Assemble file:"+lastFileName);
+    if(on_actionSave_triggered()){
+        ui->dockWidgetAssemble->setVisible(true);
+        ui->textEditAssembleOutput->setReadOnly(true);
+        ui->textEditAssembleOutput->clear();
+        ui->textEditAssembleOutput->append("Assemble file:"+lastFileName);
 
-    QString filename=lastFileName;
-    QFile file(filename);
+        QString filename=lastFileName;
+        QFile file(filename);
 
-    if (!file.open (QIODevice::ReadOnly)){
-        QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));
-        return;
-    }
-
-    // 获取当前执行目录
-    QString path;
-    QDir dir;
-    path = dir.currentPath();
-
-    // 清空
-    QFile output(path + "/error.txt");
-    output.remove();
-
-    QString programName = path + "/exe/myASM.exe";
-    QString filePath = file.fileName();
-    QStringList arguments;
-    arguments<<type<<filePath;
-
-    QProcess *dProcess = new QProcess(this);
-    dProcess->start(programName, arguments);
-    dProcess->closeWriteChannel();
-
-    while(true==dProcess->waitForFinished()){
-
-        QString outPath = path + "/error.txt";
-        QFile file(outPath);
-
-        if (file.open (QIODevice::ReadOnly | QIODevice::Text)){
-            QByteArray all = file.readAll();
-            QTextCodec *codec = QTextCodec::codecForName("GBK");
-            QString ReadyText = codec->toUnicode(all);
-            ui->textEditAssembleOutput->append(ReadyText);
+        if (!file.open (QIODevice::ReadOnly)){
+            QMessageBox::warning(this,tr("Warning"),tr("Open failed!"));
+            return;
         }
+
+        // 获取当前执行目录
+        QString path;
+        QDir dir;
+        path = dir.currentPath();
+
+        // 清空
+        QFile output(path + "/error.txt");
+        output.remove();
+
+        QString programName = path + "/exe/myASM.exe";
+        QString filePath = file.fileName();
+        QStringList arguments;
+        arguments<<filePath;
+
+        QProcess *dProcess = new QProcess(this);
+        dProcess->start(programName, arguments);
+        dProcess->closeWriteChannel();
+
+        while(true==dProcess->waitForFinished()){
+
+            QString outPath = path + "/error.txt";
+            QFile file(outPath);
+
+            if (file.open (QIODevice::ReadOnly | QIODevice::Text)){
+                QByteArray all = file.readAll();
+                QTextCodec *codec = QTextCodec::codecForName("GBK");
+                QString ReadyText = codec->toUnicode(all);
+                ui->textEditAssembleOutput->append(ReadyText);
+            }
+            return;
+        }
+
+        ui->textEditAssembleOutput->append("Process failed to start, please check!");
         return;
     }
-
-    ui->textEditAssembleOutput->append("Process failed to start, please check!");
-    return;
+    else{
+        QMessageBox::warning(this,tr("Warning"),tr("The file can only be assembled after being saved!"));
+        return;
+    }
 }
 
 void MainWindow::on_actionAbout_triggered(){
@@ -578,9 +578,7 @@ void MainWindow::actionActive(bool act){
     ui->actionReplace->setEnabled(act);
 
     ui->actionCompile->setEnabled(act);
-    ui->menuAssemble->setEnabled(act);
-    ui->actionAssembleNew->setEnabled(act);
-    ui->actionAssembleAppend->setEnabled(act);
+    ui->actionAssemble->setEnabled(act);
     ui->actionCompileOutPut->setEnabled(act);
     ui->actionAssembleOutPut->setEnabled(act);
 }
@@ -656,4 +654,28 @@ void MainWindow::replace_find_str(){
 void MainWindow::select_lex(){
     int type=lexCbBox->currentIndex();
     selectedlanguage = editor->setHl(type);  // 接收当前类型
+}
+
+// 注释
+void MainWindow::annotate(){
+    int* linefrom = new int(0);
+    int* indexfrom = new int(0);
+    int* lineto = new int(0);
+    int* indexto = new int(0);
+    editor->geteditor()->getSelection(linefrom,indexfrom,lineto,indexto);
+    if(*linefrom==-1){
+        editor->geteditor()->getCursorPosition(linefrom,lineto);
+        int position = editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_GETLINEINDENTPOSITION,*linefrom);
+        editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INSERTTEXT, position, "//");
+    }
+    else if(*linefrom==*lineto){
+        int position = editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_GETLINEINDENTPOSITION,*linefrom);
+        editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INSERTTEXT, position, "//");
+    }
+    else{
+        for(int line=*linefrom;line<=*lineto;line++){
+            int position = editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_GETLINEINDENTPOSITION,line);
+            editor->geteditor()->SendScintilla(QsciScintillaBase::SCI_INSERTTEXT, position, "//");
+        }
+    }
 }

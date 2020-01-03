@@ -1,41 +1,16 @@
-      main :   0)                              0                        4($s8)
-           :   1)                              0                       12($s8)
-           :   2)                              0                       16($s8)
-  SECTION3 :   3)             j!=              1              0       SECTION5
-           :   4)               j                                            _
-  SECTION5 :   5)            read     0xFFFFFC72                        4($s8)
-           :   6)            read     0xFFFFFC70                       12($s8)
-           :   7)             and        12($s8)          65280        24($s8)
-           :   8)                        24($s8)                       12($s8)
-           :   9)             div        12($s8)            256        28($s8)
-           :  10)                        28($s8)                       12($s8)
-           :  11)            read     0xFFFFFC70                       16($s8)
-           :  12)             and        16($s8)            255        32($s8)
-           :  13)                        32($s8)                       16($s8)
-           :  14)             j==         4($s8)              0      SECTION16
-           :  15)               j                                    SECTION19
- SECTION16 :  16)             add        12($s8)        16($s8)        36($s8)
-           :  17)           write        36($s8)                    0xFFFFFC00
-           :  18)               j                                            _
- SECTION19 :  19)             j==         4($s8)              1      SECTION21
-           :  20)               j                                    SECTION31
- SECTION21 :  21)             sub        12($s8)        16($s8)        40($s8)
-           :  22)                        40($s8)                       20($s8)
-           :  23)             j<=        20($s8)              0      SECTION25
-           :  24)               j                                    SECTION29
- SECTION25 :  25)             sub              0        20($s8)        44($s8)
-           :  26)           write        44($s8)                    0xFFFFFC00
-           :  27)           write             15                    0xFFFFFC02
-           :  28)               j                                            _
- SECTION29 :  29)           write        20($s8)                    0xFFFFFC00
-           :  30)               j                                            _
- SECTION31 :  31)             j==         4($s8)              2      SECTION33
-           :  32)               j                                    SECTION37
- SECTION33 :  33)            mult        12($s8)        16($s8)        48($s8)
-           :  34)                        48($s8)                       20($s8)
-           :  35)           write        20($s8)                    0xFFFFFC00
-           :  36)               j                                            _
- SECTION37 :  37)             div        12($s8)        16($s8)        52($s8)
-           :  38)                        52($s8)                       20($s8)
-           :  39)           write        20($s8)                    0xFFFFFC00
-           :  40)               j                                     SECTION3
+     delay :   0)                          30000                        4($s8)
+  SECTION1 :   1)              j>         4($s8)              0       SECTION3
+           :   2)               j                                            _
+  SECTION3 :   3)             sub         4($s8)              1         8($s8)
+           :   4)                         8($s8)                        4($s8)
+           :   5)               j                                     SECTION1
+      main :   6)                              0                        4($s8)
+           :   7)             add         4($s8)              1         8($s8)
+           :   8)                         8($s8)                        4($s8)
+           :   9)           write         4($s8)                    0xfffffc60
+           :  10)           write         4($s8)                    0xfffffc62
+           :  11)              j>         4($s8)             10      SECTION13
+           :  12)               j                                    SECTION14
+ SECTION13 :  13)                              0                        4($s8)
+ SECTION14 :  14)            call              0          delay               
+           :  15)                              #                       14($s8)

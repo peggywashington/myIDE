@@ -49,13 +49,13 @@ public:
     QAction *actionAssembleNew;
     QAction *actionAssembleAppend;
     QAction *actionToolBar;
+    QAction *actionAssemble;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QMenuBar *menuBar;
     QMenu *menu_1;
     QMenu *menu_2;
     QMenu *menu_4;
-    QMenu *menuAssemble;
     QMenu *menu_5;
     QMenu *menu_3;
     QToolBar *toolBar;
@@ -159,6 +159,8 @@ public:
         actionToolBar->setObjectName(QStringLiteral("actionToolBar"));
         actionToolBar->setCheckable(true);
         actionToolBar->setChecked(true);
+        actionAssemble = new QAction(MainWindow);
+        actionAssemble->setObjectName(QStringLiteral("actionAssemble"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -175,8 +177,6 @@ public:
         menu_2->setObjectName(QStringLiteral("menu_2"));
         menu_4 = new QMenu(menuBar);
         menu_4->setObjectName(QStringLiteral("menu_4"));
-        menuAssemble = new QMenu(menu_4);
-        menuAssemble->setObjectName(QStringLiteral("menuAssemble"));
         menu_5 = new QMenu(menuBar);
         menu_5->setObjectName(QStringLiteral("menu_5"));
         menu_3 = new QMenu(menuBar);
@@ -279,9 +279,7 @@ public:
         menu_2->addAction(actionFind);
         menu_2->addAction(actionReplace);
         menu_4->addAction(actionCompile);
-        menu_4->addAction(menuAssemble->menuAction());
-        menuAssemble->addAction(actionAssembleNew);
-        menuAssemble->addAction(actionAssembleAppend);
+        menu_4->addAction(actionAssemble);
         menu_5->addAction(actionAbout);
         menu_3->addAction(actionToolBar);
         menu_3->addSeparator();
@@ -377,10 +375,13 @@ public:
         actionAssembleAppend->setShortcut(QApplication::translate("MainWindow", "Ctrl+F10", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
         actionToolBar->setText(QApplication::translate("MainWindow", "\345\267\245\345\205\267\346\240\217", Q_NULLPTR));
+        actionAssemble->setText(QApplication::translate("MainWindow", "\346\261\207\347\274\226", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        actionAssemble->setShortcut(QApplication::translate("MainWindow", "Ctrl+F6", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
         menu_1->setTitle(QApplication::translate("MainWindow", "\346\226\207\344\273\266 ", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("MainWindow", "\347\274\226\350\276\221 ", Q_NULLPTR));
         menu_4->setTitle(QApplication::translate("MainWindow", "\346\236\204\345\273\272 ", Q_NULLPTR));
-        menuAssemble->setTitle(QApplication::translate("MainWindow", "\346\261\207\347\274\226", Q_NULLPTR));
         menu_5->setTitle(QApplication::translate("MainWindow", "\345\270\256\345\212\251 ", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("MainWindow", "\350\247\206\345\233\276 ", Q_NULLPTR));
 #ifndef QT_NO_ACCESSIBILITY

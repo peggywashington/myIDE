@@ -16,5 +16,8 @@ int main(int argc, char *argv[])
 //    w.setWindowFlags(Qt::FramelessWindowHint);
     w.show();
 
+
+//    qDebug()<<"current applicationDirPath: "<<QCoreApplication::applicationDirPath();
+
     return a.exec();
 }

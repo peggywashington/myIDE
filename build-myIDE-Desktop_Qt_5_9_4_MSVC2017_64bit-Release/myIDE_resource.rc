@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\lenovo\\Desktop\\back\\myIDE\\myIDE\\logo.ico"
+IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\lenovo\\Desktop\\ide\\myIDE\\myIDE\\logo.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0

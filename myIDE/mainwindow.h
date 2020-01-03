@@ -31,8 +31,6 @@ public:
 
     void actionActive(bool act);                // 按钮激活函数
 
-    void assemble(QString type);    // 汇编,参数为类型(New or Append)
-
 private slots:  // 槽函数
 
     // menu-file
@@ -54,8 +52,7 @@ private slots:  // 槽函数
 
     // menu-build
     void on_actionCompile_triggered();          // 编译
-    void on_actionAssembleNew_triggered();      // 汇编-产生新文件写入内容
-    void on_actionAssembleAppend_triggered();   // 汇编-在旧文件中追加内容  TODO:估计这个不用了
+    void on_actionAssemble_triggered();      // 汇编
 
     // menu-help
     void on_actionAbout_triggered();
@@ -67,6 +64,7 @@ private slots:  // 槽函数
     void set_find_hw();         // 设置查找全词匹配
     void show_find_str();       // 高亮查找结果
     void replace_find_str();    // 替换查找结果
+    void annotate();            // 注释
 
 private:
     Ui::MainWindow *ui;
