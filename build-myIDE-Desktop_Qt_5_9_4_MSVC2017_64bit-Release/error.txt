@@ -1,8 +1,2 @@
-error:Identifier: END is not defined!
-error:Identifier: END is not defined!
-error:Identifier: END is not defined!
-error:Identifier: END is not defined!
-error:Identifier: END is not defined!
-error:Identifier: SECTION0 is not defined!
-6 errors
-Assembly Failed!
+0 errors
+Assembly Success!

@@ -27,6 +27,16 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent),ui(new Ui::MainWind
 
     ui->setupUi(this);
 
+    // 主题
+//    this->setAutoFillBackground(true);
+//    QPalette palette;
+//    palette.setColor(QPalette::Background, QColor(192,253,123));
+//    this->setPalette(palette);
+    setWindowFlags(Qt::FramelessWindowHint);
+    installEventFilter(ui->customTitle);
+
+
+
     this->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // 设置文本编辑器为中心组件

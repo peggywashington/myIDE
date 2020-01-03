@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.setWindowTitle("myIDE");
+//    w.setWindowFlags(Qt::FramelessWindowHint);
     w.show();
 
     return a.exec();

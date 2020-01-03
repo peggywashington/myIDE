@@ -9,6 +9,7 @@ class editorWidget : public QWidget{
 
 private:
     QsciScintilla *editor=new QsciScintilla(this);
+    QsciLexer *lexer;
 
 public:
     explicit editorWidget(QWidget *parent = nullptr);
